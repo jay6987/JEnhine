@@ -6,7 +6,7 @@
 namespace UTCommon
 {
 	int chances = 100;
-	double tolerace = 0.0005;
+	double tolerace = 0.001;
 	double timeToWait = 0.2;
 	using namespace JEngine;
 	Timer timer;
