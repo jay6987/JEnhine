@@ -34,7 +34,7 @@ namespace UTCommon
 			));
 
 			Timer timer;
-
+			
 			int rst0 = myQueue1.Pop();
 
 			timer.Tic();
