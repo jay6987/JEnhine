@@ -91,6 +91,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="Noncopyable.h" />
     <ClInclude Include="Semaphore.h" />
     <ClInclude Include="SyncQueue.h" />
     <ClInclude Include="Timer.h" />
