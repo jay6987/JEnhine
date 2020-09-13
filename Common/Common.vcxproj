@@ -91,6 +91,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="Exception.h" />
     <ClInclude Include="GLog.h" />
     <ClInclude Include="LogMgr.h" />
     <ClInclude Include="Noncopyable.h" />
@@ -98,8 +99,10 @@
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SyncQueue.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="TypeDefs.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Exception.cpp" />
     <ClCompile Include="LogMgr.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>

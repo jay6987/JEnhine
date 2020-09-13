@@ -36,6 +36,7 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="UTException.cpp" />
     <ClCompile Include="UTLogMgr.cpp" />
     <ClCompile Include="UTSemaphore.cpp" />
     <ClCompile Include="UTSingleton.cpp" />
