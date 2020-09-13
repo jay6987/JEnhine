@@ -86,13 +86,24 @@
   <ItemGroup>
     <ClInclude Include="BasicMath.h" />
     <ClInclude Include="BasicMathIPP.h" />
+    <ClInclude Include="MorphologyDilate.h" />
+    <ClInclude Include="ImgROI.h" />
     <ClInclude Include="IppInitializer.h" />
+    <ClInclude Include="LinearAlgebraMath.h" />
+    <ClInclude Include="MorphologyClose.h" />
+    <ClInclude Include="MorphologyErode.h" />
+    <ClInclude Include="MorphologyOpen.h" />
     <ClInclude Include="RealFFT.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BasicMath.cpp" />
     <ClCompile Include="BasicMathIPP.cpp" />
     <ClCompile Include="IppInitializer.cpp" />
+    <ClCompile Include="LinearAlgebraMath.cpp" />
+    <ClCompile Include="MorphologyClose.cpp" />
+    <ClCompile Include="MorphologyDilate.cpp" />
+    <ClCompile Include="MorphologyErode.cpp" />
+    <ClCompile Include="MorphologyOpen.cpp" />
     <ClCompile Include="RealFFT.cpp" />
   </ItemGroup>
   <ItemGroup>
