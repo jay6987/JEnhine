@@ -82,6 +82,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AgentBase.h" />
+    <ClInclude Include="ConcurrentAgentBase.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="PipeBase.h" />
     <ClInclude Include="PipeImpl.h" />
@@ -89,9 +91,13 @@
     <ClInclude Include="PipeReadTokenInfo.h" />
     <ClInclude Include="PipeWriteToken.h" />
     <ClInclude Include="PipeWriteTokenInfo.h" />
+    <ClInclude Include="SequentialAgentBase.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AgentBase.cpp" />
+    <ClCompile Include="ConcurrentAgentBase.cpp" />
     <ClCompile Include="PipeBase.cpp" />
+    <ClCompile Include="SequentialAgentBase.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.vcxproj">

@@ -25,10 +25,17 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
+    <ClInclude Include="TestExceptionConcurrentAgent.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="SumAgent.h" />
+    <ClInclude Include="TestExceptionSequentialAgent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PipeDumpLoadImpl_size_t.cpp" />
+    <ClCompile Include="SumAgent.cpp" />
+    <ClCompile Include="TestExceptionConcurrentAgent.cpp" />
+    <ClCompile Include="TestExceptionSequentialAgent.cpp" />
+    <ClCompile Include="UTAgentBase.cpp" />
     <ClCompile Include="UTPipe.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

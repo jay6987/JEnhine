@@ -32,9 +32,27 @@
     <ClInclude Include="PipeImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AgentBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConcurrentAgentBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SequentialAgentBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PipeBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AgentBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConcurrentAgentBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SequentialAgentBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
