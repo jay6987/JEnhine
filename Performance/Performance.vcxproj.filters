@@ -20,6 +20,9 @@
     <ClInclude Include="IppInitializer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="RealFFT.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BasicMath.cpp">
@@ -29,6 +32,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="IppInitializer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RealFFT.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

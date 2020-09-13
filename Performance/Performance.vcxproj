@@ -87,11 +87,13 @@
     <ClInclude Include="BasicMath.h" />
     <ClInclude Include="BasicMathIPP.h" />
     <ClInclude Include="IppInitializer.h" />
+    <ClInclude Include="RealFFT.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BasicMath.cpp" />
     <ClCompile Include="BasicMathIPP.cpp" />
     <ClCompile Include="IppInitializer.cpp" />
+    <ClCompile Include="RealFFT.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.vcxproj">
