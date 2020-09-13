@@ -11,6 +11,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Pipeline", "Pipeline\Pipeli
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UTPipeline", "UnitTests\UTPipeline\UTPipeline.vcxproj", "{23339E52-5219-4128-8DBA-1A3D2B4A74D4}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Performance", "Performance\Performance.vcxproj", "{D3D254BE-E49A-437D-9CDA-8D0D3CBE516C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UTPerformance", "UnitTests\UTPerformance\UTPerformance.vcxproj", "{94A09FE0-1452-482B-8C25-36AEFADC2B44}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -33,6 +37,14 @@ Global
 		{23339E52-5219-4128-8DBA-1A3D2B4A74D4}.Debug|x64.Build.0 = Debug|x64
 		{23339E52-5219-4128-8DBA-1A3D2B4A74D4}.Release|x64.ActiveCfg = Release|x64
 		{23339E52-5219-4128-8DBA-1A3D2B4A74D4}.Release|x64.Build.0 = Release|x64
+		{D3D254BE-E49A-437D-9CDA-8D0D3CBE516C}.Debug|x64.ActiveCfg = Debug|x64
+		{D3D254BE-E49A-437D-9CDA-8D0D3CBE516C}.Debug|x64.Build.0 = Debug|x64
+		{D3D254BE-E49A-437D-9CDA-8D0D3CBE516C}.Release|x64.ActiveCfg = Release|x64
+		{D3D254BE-E49A-437D-9CDA-8D0D3CBE516C}.Release|x64.Build.0 = Release|x64
+		{94A09FE0-1452-482B-8C25-36AEFADC2B44}.Debug|x64.ActiveCfg = Debug|x64
+		{94A09FE0-1452-482B-8C25-36AEFADC2B44}.Debug|x64.Build.0 = Debug|x64
+		{94A09FE0-1452-482B-8C25-36AEFADC2B44}.Release|x64.ActiveCfg = Release|x64
+		{94A09FE0-1452-482B-8C25-36AEFADC2B44}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

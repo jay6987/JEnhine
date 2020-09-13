@@ -5,7 +5,7 @@
 namespace JEngine
 {
 	TestExceptionSequentialAgent::TestExceptionSequentialAgent(const int errorNum)
-		: SequentialAgentBase("CatchSeuqenceAgent")
+		: SequentialAgentBase("TestExceptionSequentialAgent")
 		, errorNum(errorNum)
 	{
 	}
