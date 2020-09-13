@@ -37,6 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UTSemaphore.cpp" />
+    <ClCompile Include="UTSingleton.cpp" />
     <ClCompile Include="UTSyncQueue.cpp" />
     <ClCompile Include="UTTimer.cpp" />
     <ClCompile Include="pch.cpp">
