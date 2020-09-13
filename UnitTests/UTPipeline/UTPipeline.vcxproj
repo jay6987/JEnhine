@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{e957c9d0-01ea-4ad3-a7c3-1f68b5e793bc}</ProjectGuid>
+    <ProjectGuid>{23339e52-5219-4128-8dba-1a3d2b4a74d4}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
     <ConfigurationType>Application</ConfigurationType>
@@ -28,24 +28,20 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="UTException.cpp" />
-    <ClCompile Include="UTLogMgr.cpp" />
-    <ClCompile Include="UTSemaphore.cpp" />
-    <ClCompile Include="UTSingleton.cpp" />
-    <ClCompile Include="UTSyncQueue.cpp" />
-    <ClCompile Include="UTTimer.cpp" />
+    <ClCompile Include="PipeDumpLoadImpl_size_t.cpp" />
+    <ClCompile Include="UTPipe.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\Common.vcxproj">
-      <Project>{edc87f9f-963f-40bf-97d9-45dc8c245648}</Project>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\..\Pipeline\Pipeline.vcxproj">
+      <Project>{04d80528-8575-4855-8807-5c9bb465dd77}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemDefinitionGroup />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
