@@ -91,6 +91,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="GLog.h" />
+    <ClInclude Include="LogMgr.h" />
     <ClInclude Include="Noncopyable.h" />
     <ClInclude Include="Semaphore.h" />
     <ClInclude Include="Singleton.h" />
@@ -98,6 +100,7 @@
     <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="LogMgr.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
