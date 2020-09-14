@@ -86,6 +86,9 @@
   <ItemGroup>
     <ClInclude Include="BasicMath.h" />
     <ClInclude Include="BasicMathIPP.h" />
+    <ClInclude Include="ImgCmp.h" />
+    <ClInclude Include="ImgEditor.h" />
+    <ClInclude Include="ImgResizer.h" />
     <ClInclude Include="MorphologyDilate.h" />
     <ClInclude Include="ImgROI.h" />
     <ClInclude Include="IppInitializer.h" />
@@ -98,6 +101,9 @@
   <ItemGroup>
     <ClCompile Include="BasicMath.cpp" />
     <ClCompile Include="BasicMathIPP.cpp" />
+    <ClCompile Include="ImgCmp.cpp" />
+    <ClCompile Include="ImgEditor.cpp" />
+    <ClCompile Include="ImgResizer.cpp" />
     <ClCompile Include="IppInitializer.cpp" />
     <ClCompile Include="LinearAlgebraMath.cpp" />
     <ClCompile Include="MorphologyClose.cpp" />
