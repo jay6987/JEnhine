@@ -15,6 +15,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Performance", "Performance\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UTPerformance", "UnitTests\UTPerformance\UTPerformance.vcxproj", "{94A09FE0-1452-482B-8C25-36AEFADC2B44}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TransformMatrix", "TransformMatrix\TransformMatrix.vcxproj", "{B1FBB58B-A418-4DB9-9F8D-06759374D603}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UTTransformMatrix", "UnitTests\UTTransformMatrix\UTTransformMatrix.vcxproj", "{3681D19B-205B-4209-9828-EF9C7A8BCD51}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -45,6 +49,14 @@ Global
 		{94A09FE0-1452-482B-8C25-36AEFADC2B44}.Debug|x64.Build.0 = Debug|x64
 		{94A09FE0-1452-482B-8C25-36AEFADC2B44}.Release|x64.ActiveCfg = Release|x64
 		{94A09FE0-1452-482B-8C25-36AEFADC2B44}.Release|x64.Build.0 = Release|x64
+		{B1FBB58B-A418-4DB9-9F8D-06759374D603}.Debug|x64.ActiveCfg = Debug|x64
+		{B1FBB58B-A418-4DB9-9F8D-06759374D603}.Debug|x64.Build.0 = Debug|x64
+		{B1FBB58B-A418-4DB9-9F8D-06759374D603}.Release|x64.ActiveCfg = Release|x64
+		{B1FBB58B-A418-4DB9-9F8D-06759374D603}.Release|x64.Build.0 = Release|x64
+		{3681D19B-205B-4209-9828-EF9C7A8BCD51}.Debug|x64.ActiveCfg = Debug|x64
+		{3681D19B-205B-4209-9828-EF9C7A8BCD51}.Debug|x64.Build.0 = Debug|x64
+		{3681D19B-205B-4209-9828-EF9C7A8BCD51}.Release|x64.ActiveCfg = Release|x64
+		{3681D19B-205B-4209-9828-EF9C7A8BCD51}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

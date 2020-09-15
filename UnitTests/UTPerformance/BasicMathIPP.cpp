@@ -16,7 +16,7 @@ namespace UTPerformance
 {
 	LogMgr logMgr;
 	atomic<bool> isLogInitialized = false;
-	const size_t n = 1000000;
+	const size_t n = 100000;
 
 	void CompareTimeSpan(string funcName, double span_my, double span_IPP)
 	{
