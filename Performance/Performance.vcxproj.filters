@@ -50,6 +50,9 @@
     <ClInclude Include="ImgResizer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ImgFilterGaussian.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BasicMath.cpp">
@@ -86,6 +89,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ImgResizer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ImgFilterGaussian.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
