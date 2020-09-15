@@ -19,6 +19,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TransformMatrix", "Transfor
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UTTransformMatrix", "UnitTests\UTTransformMatrix\UTTransformMatrix.vcxproj", "{3681D19B-205B-4209-9828-EF9C7A8BCD51}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Config", "Config\Config.vcxproj", "{F936CE63-1123-4B61-B73B-679C381282EC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UTConfig", "UnitTests\UTConfig\UTConfig.vcxproj", "{C2F95A3D-1C3C-401F-B484-6EDC5C5F38FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -57,6 +61,14 @@ Global
 		{3681D19B-205B-4209-9828-EF9C7A8BCD51}.Debug|x64.Build.0 = Debug|x64
 		{3681D19B-205B-4209-9828-EF9C7A8BCD51}.Release|x64.ActiveCfg = Release|x64
 		{3681D19B-205B-4209-9828-EF9C7A8BCD51}.Release|x64.Build.0 = Release|x64
+		{F936CE63-1123-4B61-B73B-679C381282EC}.Debug|x64.ActiveCfg = Debug|x64
+		{F936CE63-1123-4B61-B73B-679C381282EC}.Debug|x64.Build.0 = Debug|x64
+		{F936CE63-1123-4B61-B73B-679C381282EC}.Release|x64.ActiveCfg = Release|x64
+		{F936CE63-1123-4B61-B73B-679C381282EC}.Release|x64.Build.0 = Release|x64
+		{C2F95A3D-1C3C-401F-B484-6EDC5C5F38FD}.Debug|x64.ActiveCfg = Debug|x64
+		{C2F95A3D-1C3C-401F-B484-6EDC5C5F38FD}.Debug|x64.Build.0 = Debug|x64
+		{C2F95A3D-1C3C-401F-B484-6EDC5C5F38FD}.Release|x64.ActiveCfg = Release|x64
+		{C2F95A3D-1C3C-401F-B484-6EDC5C5F38FD}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
