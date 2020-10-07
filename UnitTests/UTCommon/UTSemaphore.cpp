@@ -91,7 +91,7 @@ namespace UTCommon
 			std::launch::async,
 			[&]()
 			{
-				sema.Wait(1);
+				sema.Wait(2);
 				return;
 			}
 		);
@@ -105,10 +105,15 @@ namespace UTCommon
 			}
 		);
 
+		Timer::Sleep(0.2);
+
+		sema.Signal(1);
+
+		waiter2.get();
+
 		sema.Signal(2);
 
 		waiter1.get();
-		waiter2.get();
 	}
 
 

@@ -30,7 +30,7 @@ namespace JEngine
 		{
 			std::lock_guard<std::mutex> lock(mutex);
 			count += n;
-			condition.notify_one();
+			condition.notify_all();
 		}
 
 		void Wait(const size_t n = 1)
