@@ -96,6 +96,7 @@
     <ClInclude Include="LogMgr.h" />
     <ClInclude Include="Noncopyable.h" />
     <ClInclude Include="Semaphore.h" />
+    <ClInclude Include="SequentialScope.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SyncQueue.h" />
     <ClInclude Include="Timer.h" />

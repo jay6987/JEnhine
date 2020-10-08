@@ -467,7 +467,7 @@ namespace UTPipeline
 		}
 		catch (Exception& e)
 		{
-			ASSERT_STREQ(e.what(), "GetReadToken can not be called concurrently.");
+			ASSERT_STREQ(e.what(), "reentered sequential scope");
 			return;
 		}
 		FAIL() << "exception not caught";
@@ -517,7 +517,7 @@ namespace UTPipeline
 		}
 		catch (Exception& e)
 		{
-			ASSERT_STREQ(e.what(), "GetWriteToken can not be called concurrently.");
+			ASSERT_STREQ(e.what(), "reentered sequential scope");
 			return;
 		}
 		FAIL() << "exception not caught";

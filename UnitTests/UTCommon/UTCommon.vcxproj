@@ -31,6 +31,7 @@
     <ClCompile Include="UTException.cpp" />
     <ClCompile Include="UTLogMgr.cpp" />
     <ClCompile Include="UTSemaphore.cpp" />
+    <ClCompile Include="UTSequentialScope.cpp" />
     <ClCompile Include="UTSingleton.cpp" />
     <ClCompile Include="UTSyncQueue.cpp" />
     <ClCompile Include="UTTimer.cpp" />

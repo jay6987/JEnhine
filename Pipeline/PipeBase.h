@@ -11,6 +11,7 @@
 #include <memory>
 
 #include "../Common/Noncopyable.h"
+#include "../Common/SequentialScope.h"
 
 #include "PipeReadTokenInfo.h"
 #include "PipeWriteTokenInfo.h"
@@ -111,8 +112,8 @@ namespace JEngine
 		std::mutex mutex;
 		std::condition_variable condition;
 
-		std::mutex seqGetWriteTokenMutex;
-		std::mutex seqGetReadTokenMutex;
+		SequentialScope::EnteredFlag gettingWriteToken;
+		SequentialScope::EnteredFlag gettingReadToken;
 
 		std::queue<WriteTokenInfoPtr> writtingTokensInUse;
 		std::queue<ReadTokenInfoPtr> readingTokensInUse;

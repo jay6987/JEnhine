@@ -141,9 +141,7 @@ namespace JEngine
 		size_t tokenWriteSize,
 		bool isShotEnd)
 	{
-		std::unique_lock<std::mutex> sequentialGuard(seqGetWriteTokenMutex, std::try_to_lock);
-		if (!sequentialGuard.owns_lock())
-			ThrowExceptionAndLog("GetWriteToken can not be called concurrently.");
+		CheckSequential(gettingWriteToken);
 
 		if (tokenWriteSize > bufferSize)
 		{
@@ -217,9 +215,7 @@ namespace JEngine
 
 	std::shared_ptr<PipeReadTokenInfo> PipeBase::GetReadTokenInfo()
 	{
-		std::unique_lock<std::mutex> sequentialGuard(seqGetReadTokenMutex, std::try_to_lock);
-		if (!sequentialGuard.owns_lock())
-			ThrowExceptionAndLog("GetReadToken can not be called concurrently.");
+		CheckSequential(gettingReadToken);
 
 		std::unique_lock lock(mutex);
 
