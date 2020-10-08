@@ -430,4 +430,98 @@ namespace UTPipeline
 
 	}
 
+	TEST(PipeTest, ConcurrentGetReadTokenFail)
+	{
+		const size_t numWriterThreads = 1;
+		const size_t nWriteSize = 1;
+		const size_t numReadThreads = 2;
+		const size_t nReadSize = 1;
+		const size_t nOverlapSize = 0;
+		Pipe<size_t> pipe("UTConcurrentGetReadTokenFail");
+		pipe.SetTemplate(0, {});
+		pipe.SetProducer("producer", numWriterThreads, nWriteSize);
+		pipe.SetConsumer("consumer", numReadThreads, nReadSize, nOverlapSize);
+
+		std::future<void> fut1(
+			std::async(
+				std::launch::async,
+				[&] { pipe.GetReadToken(); }
+			)
+		);
+
+		std::future<void> fut2(
+			std::async(
+				std::launch::async,
+				[&] { pipe.GetReadToken(); }
+			)
+		);
+
+		Timer::Sleep(0.1);
+		{
+			pipe.GetWriteToken(1, true);
+			fut1.get();
+		}
+
+		try {
+			fut2.get();
+		}
+		catch (Exception& e)
+		{
+			ASSERT_STREQ(e.what(), "GetReadToken can not be called concurrently.");
+			return;
+		}
+		FAIL() << "exception not caught";
+
+	}
+
+	TEST(PipeTest, ConcurrentGetWriteTokenFail)
+	{
+		const size_t numWriterThreads = 2;
+		const size_t nWriteSize = 1;
+		const size_t numReadThreads = 1;
+		const size_t nReadSize = 1;
+		const size_t nOverlapSize = 0;
+		Pipe<size_t> pipe("UTConcurrentGetWriteTokenFail");
+		pipe.SetTemplate(0, {});
+		pipe.SetProducer("producer", numWriterThreads, nWriteSize);
+		pipe.SetConsumer("consumer", numReadThreads, nReadSize, nOverlapSize);
+
+		{
+			pipe.GetWriteToken(pipe.GetBufferSize(), true);
+			// now the pipe is full
+		}
+
+		std::future<void> fut1(
+			std::async(
+				std::launch::async,
+				[&] { pipe.GetWriteToken(1, true); }
+			)
+		);
+
+		std::future<void> fut2(
+			std::async(
+				std::launch::async,
+				[&] { pipe.GetWriteToken(1, true); }
+			)
+		);
+
+		Timer::Sleep(0.1);
+		{
+			for (size_t i = 0; i < pipe.GetBufferSize(); ++i)
+				pipe.GetReadToken();
+			fut1.get();
+		}
+
+		try {
+			fut2.get();
+		}
+		catch (Exception& e)
+		{
+			ASSERT_STREQ(e.what(), "GetWriteToken can not be called concurrently.");
+			return;
+		}
+		FAIL() << "exception not caught";
+
+	}
+
 }

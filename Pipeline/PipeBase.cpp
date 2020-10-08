@@ -34,7 +34,7 @@ namespace JEngine
 	PipeBase::~PipeBase()
 	{
 		std::unique_lock lk(mutex);
-		while (!writtingTokens.empty() || !readingTokens.empty())
+		while (!writtingTokensInUse.empty() || !readingTokensInUse.empty())
 		{
 			condition.wait(lk);
 		}
@@ -141,12 +141,15 @@ namespace JEngine
 		size_t tokenWriteSize,
 		bool isShotEnd)
 	{
+		std::unique_lock<std::mutex> sequentialGuard(seqGetWriteTokenMutex, std::try_to_lock);
+		if (!sequentialGuard.owns_lock())
+			ThrowExceptionAndLog("GetWriteToken can not be called concurrently.");
+
 		if (tokenWriteSize > bufferSize)
 		{
 			ThrowExceptionAndLog(
 				"Pipe::GetWriteToken(): write size is larger than buffer size!");
 		}
-		std::lock_guard guard(seqGetWriteTokenMutex);
 		std::unique_lock lock(mutex);
 
 		while (writingPos + tokenWriteSize > writeDonePos + bufferSize)
@@ -179,7 +182,7 @@ namespace JEngine
 			writingPos,
 			tokenWriteSize,
 			isShotStart, isShotEnd);
-		writtingTokens.emplace(pWriteTokenInfo);
+		writtingTokensInUse.emplace(pWriteTokenInfo);
 
 		writingPos += tokenWriteSize;
 		if (isShotEnd)
@@ -194,15 +197,15 @@ namespace JEngine
 
 	bool PipeBase::IsBufferReadyToWrite(size_t currentWriteSize)
 	{
-		const size_t possibleReadingPos = readingTokens.empty() ?
+		const size_t possibleReadingPos = readingTokensInUse.empty() ?
 			(shotsToRead.empty() ? readingPos : CalcReadStartPos())
 			:
-			readingTokens.front()->StartIndex;
+			readingTokensInUse.front()->StartIndex;
 		const bool isBufferReadyToWrite = writingPos + currentWriteSize <=
 			possibleReadingPos + bufferSize;
 		if (!isBufferReadyToWrite &&
-			readingTokens.empty() &&
-			writtingTokens.empty() &&
+			readingTokensInUse.empty() &&
+			writtingTokensInUse.empty() &&
 			!IsDataReadyToRead())
 		{
 			closed = true;
@@ -214,7 +217,10 @@ namespace JEngine
 
 	std::shared_ptr<PipeReadTokenInfo> PipeBase::GetReadTokenInfo()
 	{
-		std::lock_guard guard(seqGetReadTokenMutex);
+		std::unique_lock<std::mutex> sequentialGuard(seqGetReadTokenMutex, std::try_to_lock);
+		if (!sequentialGuard.owns_lock())
+			ThrowExceptionAndLog("GetReadToken can not be called concurrently.");
+
 		std::unique_lock lock(mutex);
 
 
@@ -248,7 +254,7 @@ namespace JEngine
 				actualReadSize, actualOverlapSize,
 				isShotStart, isShotEnd);
 
-		readingTokens.push(pReadTokenInfo);
+		readingTokensInUse.push(pReadTokenInfo);
 		readingPos += actualReadSize - actualOverlapSize;
 
 		if (pLoadFileStream.get())
@@ -260,6 +266,7 @@ namespace JEngine
 
 		condition.notify_all();
 		return pReadTokenInfo;
+
 	}
 
 	bool PipeBase::IsDataReadyToRead()
@@ -292,10 +299,10 @@ namespace JEngine
 		std::lock_guard lk(mutex);
 
 		const size_t writeDonePosBackUp = writeDonePos;
-		while (!writtingTokens.empty() && writtingTokens.front().use_count() == 1)
+		while (!writtingTokensInUse.empty() && writtingTokensInUse.front().use_count() == 1)
 		{
-			writeDonePos += writtingTokens.front()->Size;
-			writtingTokens.pop();
+			writeDonePos += writtingTokensInUse.front()->Size;
+			writtingTokensInUse.pop();
 		}
 		if (pDumpFileStream.get() && writeDonePos != writeDonePosBackUp)
 		{
@@ -309,12 +316,12 @@ namespace JEngine
 	{
 		std::lock_guard lk(mutex);
 
-		while (!readingTokens.empty() && readingTokens.front().use_count() == 1)
+		while (!readingTokensInUse.empty() && readingTokensInUse.front().use_count() == 1)
 		{
 			readDonePos =
-				readingTokens.front()->StartIndex +
-				readingTokens.front()->Size;
-			readingTokens.pop();
+				readingTokensInUse.front()->StartIndex +
+				readingTokensInUse.front()->Size;
+			readingTokensInUse.pop();
 		}
 
 		condition.notify_all();

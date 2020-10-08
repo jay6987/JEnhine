@@ -114,8 +114,8 @@ namespace JEngine
 		std::mutex seqGetWriteTokenMutex;
 		std::mutex seqGetReadTokenMutex;
 
-		std::queue<WriteTokenInfoPtr> writtingTokens;
-		std::queue<ReadTokenInfoPtr> readingTokens;
+		std::queue<WriteTokenInfoPtr> writtingTokensInUse;
+		std::queue<ReadTokenInfoPtr> readingTokensInUse;
 
 		const std::string pipeName;
 		std::string consumerName;
