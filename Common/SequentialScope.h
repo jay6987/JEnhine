@@ -11,8 +11,13 @@
 
 namespace JEngine
 {
+	// uncomment the following line if you want to check sequential scope
+//#define CHECK_SEQUENTIAL_SCOPE
 
-	// if this scope is re-entered, throw an exception
+#ifdef CHECK_SEQUENTIAL_SCOPE
+
+#define DeclearSequentialMutex(enteredFlag) SequentialScope::EnteredFlag enteredFlag;
+
 #define CheckSequential(enteredFlag) SequentialScope ss = SequentialScope(enteredFlag,__FILE__,__LINE__)
 
 	class SequentialScope : Noncopyable
@@ -35,4 +40,13 @@ namespace JEngine
 	private:
 		std::unique_lock<std::mutex> lock;
 	};
+
+#else
+
+#define DeclearSequentialMutex(enteredFlag) 
+
+#define CheckSequential(enteredFlag) 
+
+#endif
+
 }

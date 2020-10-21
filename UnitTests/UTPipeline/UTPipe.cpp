@@ -430,6 +430,7 @@ namespace UTPipeline
 
 	}
 
+#ifdef CHECK_SEQUENTIAL_SCOPE
 	TEST(PipeTest, ConcurrentGetReadTokenFail)
 	{
 		const size_t numWriterThreads = 1;
@@ -523,5 +524,6 @@ namespace UTPipeline
 		FAIL() << "exception not caught";
 
 	}
+#endif
 
 }

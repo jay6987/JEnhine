@@ -112,8 +112,8 @@ namespace JEngine
 		std::mutex mutex;
 		std::condition_variable condition;
 
-		SequentialScope::EnteredFlag gettingWriteToken;
-		SequentialScope::EnteredFlag gettingReadToken;
+		DeclearSequentialMutex(gettingWriteToken);
+		DeclearSequentialMutex(gettingReadToken);
 
 		std::queue<WriteTokenInfoPtr> writtingTokensInUse;
 		std::queue<ReadTokenInfoPtr> readingTokensInUse;

@@ -20,7 +20,7 @@ namespace UTCommon
 			Timer::Sleep(0.1);
 		}
 	private:
-		SequentialScope::EnteredFlag SequentialFunctionEntered;
+		DeclearSequentialMutex(SequentialFunctionEntered);
 	};
 
 	TEST(SequentialScopeTest, ConcurrentCallShouldFail)
@@ -43,6 +43,8 @@ namespace UTCommon
 
 		fut1.get();// the first call will finish successfully
 
+#ifdef CHECK_SEQUENTIAL_SCOPE
+
 		try {
 			fut2.get();
 		}
@@ -52,6 +54,9 @@ namespace UTCommon
 			return;
 		}
 		FAIL();
+#else
+		fut2.get();
+#endif
 	}
 
 	TEST(SequentialScopeTest, MultiObjectIsOK)
