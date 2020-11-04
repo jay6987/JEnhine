@@ -124,8 +124,11 @@ namespace JEngine
 			// tell the manager, "I am ready"
 			idleWorkerIndex.Push(threadIndex);
 
-			// wait for next task, then process.
-			ProcessTask(threadIndex, nextTask.Pop());
+			// wait for next task, 
+			std::unique_ptr<TaskBase> task = nextTask.Pop();
+
+			// then process.
+			ProcessTask(threadIndex, std::move(task));
 		}
 	}
 }

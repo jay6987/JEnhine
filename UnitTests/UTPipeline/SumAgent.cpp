@@ -25,13 +25,13 @@ namespace JEngine
 		{
 			const size_t threadIndex = WaitIdleWorkerIndex();
 
-			Task task;
-			task.PA = a.data() + startIndex;
-			task.PB = b.data() + startIndex;
-			task.PSum = sum.data() + startIndex;
-			task.Size = std::min(packSize, size - startIndex);
+			std::unique_ptr<Task> task(std::make_unique<Task>());
+			task->PA = a.data() + startIndex;
+			task->PB = b.data() + startIndex;
+			task->PSum = sum.data() + startIndex;
+			task->Size = std::min(packSize, size - startIndex);
 
-			SubmitTask(std::make_unique<Task>(task));
+			SubmitTask(std::move(task));
 		}
 
 	}
