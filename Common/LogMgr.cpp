@@ -1,6 +1,7 @@
 //   LogMgr is used to write logs into file
 
 #include <chrono>
+#include <iostream>
 
 #include "LogMgr.h"
 
@@ -77,7 +78,7 @@ namespace JEngine
 			while (true)
 			{
 				auto msg = messagesToWrite.Pop();
-				printf(msg.c_str()); printf("\r\n");
+				std::cout << msg << std::endl;
 				fileStream << msg << std::endl;
 			}
 		}

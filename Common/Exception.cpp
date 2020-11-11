@@ -7,19 +7,18 @@
 namespace JEngine
 {
 	Exception::Exception(
-		const std::string file,
-		const size_t nLine,
-		const std::string msg,
+		const std::string& file,
+		const size_t line,
+		const std::string& msg,
 		const bool log)
 		: std::exception(msg.c_str())
 	{
-		std::string msgWithLocation = "An exception is thrown in line "
-			+ std::to_string(nLine)
-			+ ", \""
-			+ file
-			+ "\": "
-			+ what();
 		if (log)
-			GLog(msgWithLocation);
+			GLog("An exception is thrown in line "
+				+ std::to_string(line)
+				+ ", \""
+				+ file
+				+ "\": "
+				+ what());
 	}
 }

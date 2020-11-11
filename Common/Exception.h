@@ -34,7 +34,7 @@ namespace JEngine
 	class Exception : public std::exception
 	{
 	public:
-		Exception(const std::string file, const size_t nLine, const std::string msg, const bool log);
+		Exception(const std::string& file, const size_t line, const std::string& msg, const bool log);
 		std::string What() const { return what(); };
 		// TODO:
 		// add ErrLevel, ErrComponents...
