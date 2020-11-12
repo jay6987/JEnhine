@@ -1,5 +1,7 @@
 // Description:
-//   SequentialAgentBase a is working unit in pipeline while works sequentially
+//   SequentialAgentBase a is working unit in pipeline whitch works sequentially.
+//   SequentialAgent can includes multi steps, and multi steps can work concurrently,
+//   but each step works sequentially.
 
 #pragma once
 
@@ -11,7 +13,8 @@ namespace JEngine
 	{
 	public:
 		SequentialAgentBase(
-			const std::string& agentName);
+			const std::string& agentName,
+			const int numSteps);
 
 		virtual ~SequentialAgentBase() {}
 
@@ -23,14 +26,19 @@ namespace JEngine
 
 	protected:
 
-
-		virtual void WorkFlow() = 0;
+		virtual void WorkFlow0() = 0;
+		virtual void WorkFlow1() {}
+		virtual void WorkFlow2() {}
+		virtual void WorkFlow3() {}
+		virtual void WorkFlow4() {}
 
 	private:
 
-		std::future<void> worker;
+		std::vector<std::future<void>> workers;
 
-		void WorkFlowWrappd();
+		void WorkFlowWrappd(int index);
+
+		const int numSteps;
 
 	};
 }

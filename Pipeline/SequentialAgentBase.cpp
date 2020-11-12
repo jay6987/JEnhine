@@ -7,50 +7,73 @@
 namespace JEngine
 {
 	SequentialAgentBase::SequentialAgentBase(
-		const std::string& agentName)
+		const std::string& agentName,
+		const int numSteps)
 		: AgentBase(agentName)
+		, numSteps(numSteps)
 	{
 	}
 
 	void SequentialAgentBase::Start()
 	{
-		worker = std::async(
-			std::launch::async,
-			&SequentialAgentBase::WorkFlowWrappd, this
-		);
+		for (int i = 0; i < numSteps; ++i)
+		{
+			workers.emplace_back(
+				std::async(
+					std::launch::async,
+					&SequentialAgentBase::WorkFlowWrappd,
+					this,
+					i));
+		}
 	}
 
 	void SequentialAgentBase::Join()
 	{
-		worker.get();
+		for (auto& w : workers)
+		{
+			w.get();
+		}
 		CloseAllUsedPipes();
 	}
 
-	void SequentialAgentBase::WorkFlowWrappd()
+	void SequentialAgentBase::WorkFlowWrappd(int index)
 	{
 		try
 		{
-			WorkFlow();
+			switch (index)
+			{
+			case 0:
+				WorkFlow0(); break;
+			case 1:
+				WorkFlow1(); break;
+			case 2:
+				WorkFlow2(); break;
+			case 3:
+				WorkFlow3(); break;
+			case 4:
+				WorkFlow4(); break;
+			default:
+				ThrowException("SequentialAgentBase can only contains less than 6 steps");
+			}
 		}
 		catch (Exception&)
 		{
 			std::stringstream ss;
-			ss << GetAgentName() << " die, because of an Exception. ";
+			ss << GetAgentName() << " step #"<< index << " die, because of an Exception. ";
 			GLog(ss.str());
 		}
 		catch (std::exception& e)
 		{
 			std::stringstream ss;
-			ss << GetAgentName() << " die, " << e.what();
+			ss << GetAgentName() << " step #" << index << " die, " << e.what();
 			GLog(ss.str());
 		}
 		catch (...)
 		{
 			std::stringstream ss;
-			ss << GetAgentName() << " die, unknown exception.";
+			ss << GetAgentName() << " step #" << index << " die, unknown exception.";
 			GLog(ss.str());
 		}
-		CloseAllUsedPipes();
 	}
 
 }

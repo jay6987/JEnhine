@@ -33,6 +33,7 @@
     <ClCompile Include="UTSemaphore.cpp" />
     <ClCompile Include="UTSequentialScope.cpp" />
     <ClCompile Include="UTSingleton.cpp" />
+    <ClCompile Include="UTSyncMap.cpp" />
     <ClCompile Include="UTSyncQueue.cpp" />
     <ClCompile Include="UTTimer.cpp" />
     <ClCompile Include="pch.cpp">

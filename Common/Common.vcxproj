@@ -98,6 +98,7 @@
     <ClInclude Include="Semaphore.h" />
     <ClInclude Include="SequentialScope.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="SyncMap.h" />
     <ClInclude Include="SyncQueue.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TypeDefs.h" />

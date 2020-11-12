@@ -18,7 +18,7 @@ namespace JEngine
 
 		void SetPipesImpl() override {};
 
-		void WorkFlow() override;
+		void WorkFlow0() override;
 
 	};
 

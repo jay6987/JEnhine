@@ -97,6 +97,7 @@
     <ClCompile Include="AgentBase.cpp" />
     <ClCompile Include="ConcurrentAgentBase.cpp" />
     <ClCompile Include="PipeBase.cpp" />
+    <ClCompile Include="PipeDumpLoadImpl.cpp" />
     <ClCompile Include="SequentialAgentBase.cpp" />
   </ItemGroup>
   <ItemGroup>

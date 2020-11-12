@@ -5,12 +5,12 @@
 namespace JEngine
 {
 	TestExceptionSequentialAgent::TestExceptionSequentialAgent(const int errorNum)
-		: SequentialAgentBase("TestExceptionSequentialAgent")
+		: SequentialAgentBase("TestExceptionSequentialAgent",1)
 		, errorNum(errorNum)
 	{
 	}
 
-	void TestExceptionSequentialAgent::WorkFlow()
+	void TestExceptionSequentialAgent::WorkFlow0()
 	{
 		switch (TestExceptionSequentialAgent::errorNum)
 		{
