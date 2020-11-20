@@ -13,7 +13,7 @@ namespace JEngine
 	{
 	public:
 		SequentialAgentBase(
-			const std::string& agentName,
+			const std::string& name,
 			const int numSteps);
 
 		virtual ~SequentialAgentBase() {}

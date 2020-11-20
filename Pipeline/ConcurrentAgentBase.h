@@ -14,7 +14,7 @@ namespace JEngine
 
 	public:
 		ConcurrentAgentBase(
-			const std::string& agentName,
+			const std::string& name,
 			const size_t numThreads);
 
 		virtual ~ConcurrentAgentBase() {}

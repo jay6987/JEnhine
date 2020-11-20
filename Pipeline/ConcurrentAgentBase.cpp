@@ -7,9 +7,9 @@
 namespace JEngine
 {
 	ConcurrentAgentBase::ConcurrentAgentBase(
-		const std::string& agentName,
+		const std::string& name,
 		const size_t numThreads)
-		: AgentBase(agentName)
+		: AgentBase(name)
 		, numWorkers(numThreads)
 		, idleWorkerIndex(numThreads)
 		, nextTask(1)
@@ -42,7 +42,7 @@ namespace JEngine
 		{
 			worker.get();
 		}
-		CloseAllUsedPipes();
+		CloseConnectedPipes();
 	}
 
 	size_t ConcurrentAgentBase::WaitIdleWorkerIndex()
@@ -81,7 +81,7 @@ namespace JEngine
 			ss << GetAgentName() << " manager die, unknown exception.";
 			GLog(ss.str());
 		}
-		CloseAllUsedPipes();
+		CloseConnectedPipes();
 	}
 
 	void ConcurrentAgentBase::WorkerWorkFlowWrapped(const size_t threadIndex)

@@ -71,6 +71,7 @@ namespace JEngine
 		size_t GetReadDonePos();
 
 		void Close();
+		bool Closed() const { return closed; }
 
 		void ClearFinishedWriteTokens();
 		void ClearFinishedReadTokens();

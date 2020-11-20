@@ -7,7 +7,7 @@
 
 namespace JEngine
 {
-	LogMgr::LogMgr()
+	LogMgr::LogMgr(): logDebugEnabled(false)
 	{
 		LogDebug = std::bind(&LogMgr::LogDebugFake, this, std::placeholders::_1);
 		Log("==================== LogMgr Initilized ===================================");
@@ -45,6 +45,7 @@ namespace JEngine
 
 	void LogMgr::EnableDebug()
 	{
+		logDebugEnabled = true;
 		LogDebug = std::bind(&LogMgr::LogDebugReal, this, std::placeholders::_1);
 	}
 

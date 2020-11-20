@@ -1,15 +1,15 @@
-#include "AgentBase.h"
 // Description:
 //   AgentBase a is working unit in pipeline
 //   The base class provide some components to record performance
 
 #include "AgentBase.h"
 #include "PipeBase.h"
+#include "../Common/GLog.h"
 
 namespace JEngine
 {
-	AgentBase::AgentBase(const std::string& agentName)
-		: agentName(agentName)
+	AgentBase::AgentBase(const std::string& name)
+		: name(name)
 	{
 	}
 
@@ -22,11 +22,16 @@ namespace JEngine
 		pipes = trunk;
 	}
 
-	void AgentBase::CloseAllUsedPipes()
+	void AgentBase::CloseConnectedPipes()
 	{
-		for (std::shared_ptr<PipeBase> pipe : usedPipes)
+		std::lock_guard lk(closePipeMutex);
+		for (std::shared_ptr<PipeBase> pipe : connectedPipes)
 		{
-			pipe->Close();
+			if (!pipe->Closed())
+			{
+				GLog(name + ": " + pipe->GetName() + " is forced closed");
+				pipe->Close();
+			}
 		}
 	}
 

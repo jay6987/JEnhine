@@ -7,9 +7,9 @@
 namespace JEngine
 {
 	SequentialAgentBase::SequentialAgentBase(
-		const std::string& agentName,
+		const std::string& name,
 		const int numSteps)
-		: AgentBase(agentName)
+		: AgentBase(name)
 		, numSteps(numSteps)
 	{
 	}
@@ -33,7 +33,7 @@ namespace JEngine
 		{
 			w.get();
 		}
-		CloseAllUsedPipes();
+		CloseConnectedPipes();
 	}
 
 	void SequentialAgentBase::WorkFlowWrappd(int index)
@@ -61,18 +61,21 @@ namespace JEngine
 			std::stringstream ss;
 			ss << GetAgentName() << " step #"<< index << " die, because of an Exception. ";
 			GLog(ss.str());
+			CloseConnectedPipes();
 		}
 		catch (std::exception& e)
 		{
 			std::stringstream ss;
 			ss << GetAgentName() << " step #" << index << " die, " << e.what();
 			GLog(ss.str());
+			CloseConnectedPipes();
 		}
 		catch (...)
 		{
 			std::stringstream ss;
 			ss << GetAgentName() << " step #" << index << " die, unknown exception.";
 			GLog(ss.str());
+			CloseConnectedPipes();
 		}
 	}
 

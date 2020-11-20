@@ -9,3 +9,4 @@
 #define GEnableDebugLog() Singleton<LogMgr>::Instance().EnableDebug()
 #define GLog(msg) Singleton<LogMgr>::Instance().Log(msg)
 #define GLogDebug(msg) Singleton<LogMgr>::Instance().LogDebug(msg)
+#define GLogDebugEnabled Singleton<LogMgr>::Instance().LogDebugEnabled()

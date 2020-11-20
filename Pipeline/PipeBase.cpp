@@ -5,6 +5,7 @@
 
 #include "../Common/Exception.h"
 #include "../Common/Timer.h"
+#include "../Common/GLog.h"
 
 #include "PipeBase.h"
 #include "PipeReadTokenInfo.h"
@@ -42,10 +43,12 @@ namespace JEngine
 			pDumpFileStream->close();
 		if (pLoadFileStream.get())
 			pLoadFileStream->close();
-		//std::string log = "pipe is destructing.\n" + producerName + "(Producer)" +
-		//	" is blocked by " + consumerName + "(Consumer) for " +
-		//	std::to_string(producerBlockedTime) + "s.\n";
-		//GLog(log);
+
+		GLogDebug(pipeName + " pipe destructed.\n"
+			+ producerName
+			+ " is blocked by "
+			+ consumerName + " for "
+			+ std::to_string(producerBlockedTime) + "s.");
 	}
 
 	void PipeBase::SetConsumer(
@@ -133,8 +136,12 @@ namespace JEngine
 	void PipeBase::Close()
 	{
 		std::lock_guard lock(mutex);
-		closed = true;
-		condition.notify_all();
+		if (!closed)
+		{
+			closed = true;
+			GLogDebug(pipeName + " pipe is closed.");
+			condition.notify_all();
+		}
 	}
 
 	std::shared_ptr<PipeWriteTokenInfo> PipeBase::GetWriteTokenInfo(

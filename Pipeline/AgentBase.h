@@ -22,7 +22,7 @@ namespace JEngine
 	class AgentBase : public Noncopyable
 	{
 	public:
-		AgentBase(const std::string& agentName);
+		AgentBase(const std::string& name);
 
 		virtual ~AgentBase() {};
 
@@ -34,7 +34,7 @@ namespace JEngine
 
 		virtual void Join() = 0;
 
-		std::string GetAgentName() const { return agentName; }
+		std::string GetAgentName() const { return name; }
 		virtual size_t GetNumThreads() const = 0;
 
 		double GetOccupiedTime() const { return accumulatedOccupiedSpan; }
@@ -57,10 +57,9 @@ namespace JEngine
 		template<typename PipeType>
 		void MergePipeToTrunk(std::shared_ptr<Pipe<PipeType>> branch);
 
-		// collect all output pipes, close them after main thread joined.
-		std::set<std::shared_ptr<PipeBase>> usedPipes;
+		std::set<std::shared_ptr<PipeBase>> connectedPipes;
 
-		void CloseAllUsedPipes();
+		void CloseConnectedPipes();
 
 		class WaitAsyncScope;
 
@@ -68,7 +67,9 @@ namespace JEngine
 
 	private:
 
-		const std::string agentName;
+		const std::string name;
+
+		std::mutex closePipeMutex;
 
 		// before running this function,
 		// pipes are all pipes INPUT and PASSBY this agent;
@@ -132,7 +133,7 @@ namespace JEngine
 			if (name == pipeIt->get()->GetName())
 			{
 				auto pPipeIn = std::dynamic_pointer_cast<Pipe<PipeType>>(*pipeIt);
-				usedPipes.insert(*pipeIt);
+				connectedPipes.insert(*pipeIt);
 				trunk.erase(pipeIt);
 				return std::shared_ptr<Pipe<PipeType>>(pPipeIn);
 			}
@@ -146,6 +147,6 @@ namespace JEngine
 	inline void AgentBase::MergePipeToTrunk(std::shared_ptr<Pipe<PipeType>> branch)
 	{
 		trunk.push_back(branch);
-		usedPipes.insert(branch);
+		connectedPipes.insert(branch);
 	}
 }

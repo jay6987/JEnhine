@@ -23,6 +23,7 @@ namespace JEngine
 		void EnableDebug();
 		void Log(const std::string& message);
 		std::function<void(const std::string&)> LogDebug;
+		bool LogDebugEnabled() const { return logDebugEnabled; }
 	private:
 		void WriteLogs();
 		void LogDebugReal(const std::string& message);
@@ -32,6 +33,7 @@ namespace JEngine
 		std::future<void> writeLogThread;
 		std::fstream fileStream;
 		SyncQueue<std::string> messagesToWrite;
+		bool logDebugEnabled;
 	};
 
 
