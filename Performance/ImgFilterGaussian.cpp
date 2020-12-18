@@ -2,6 +2,12 @@
 
 #include <ipp.h>
 
+#pragma comment (lib,"ippcoremt.lib")
+#pragma comment (lib,"ippvmmt.lib")
+#pragma comment (lib,"ippsmt.lib")
+#pragma comment (lib,"ippimt.lib")
+#pragma comment (lib,"ippcvmt.lib")
+
 namespace JEngine
 {
 	ImgFilterGaussian::ImgFilterGaussian(
