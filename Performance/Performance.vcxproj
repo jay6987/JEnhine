@@ -88,6 +88,7 @@
     <ClInclude Include="BasicMathIPP.h" />
     <ClInclude Include="ImgCmp.h" />
     <ClInclude Include="ImgEditor.h" />
+    <ClInclude Include="ImgFilterBox.h" />
     <ClInclude Include="ImgFilterGaussian.h" />
     <ClInclude Include="ImgResizer.h" />
     <ClInclude Include="MorphologyDilate.h" />
@@ -104,6 +105,7 @@
     <ClCompile Include="BasicMathIPP.cpp" />
     <ClCompile Include="ImgCmp.cpp" />
     <ClCompile Include="ImgEditor.cpp" />
+    <ClCompile Include="ImgFilterBox.cpp" />
     <ClCompile Include="ImgFilterGaussian.cpp" />
     <ClCompile Include="ImgResizer.cpp" />
     <ClCompile Include="IppInitializer.cpp" />

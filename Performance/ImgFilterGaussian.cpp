@@ -47,8 +47,8 @@ namespace JEngine
 
 	ImgFilterGaussian::~ImgFilterGaussian()
 	{
-		ippsFree((IppFilterGaussianSpec*)pBuffer);
-		ippsFree((Ipp8u*)pSpec);
+		ippsFree((IppFilterGaussianSpec*)pSpec);
+		ippsFree((Ipp8u*)pBuffer);
 	}
 
 	void ImgFilterGaussian::Execute(
