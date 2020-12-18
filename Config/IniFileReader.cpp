@@ -48,8 +48,8 @@ namespace JEngine
 			sizeof(buf),
 			filePath.wstring().c_str()))
 		{
-			// TODO:
-			// wstring log
+			ThrowException("Fail to read file " + filePath.string());
+			// To-do: tell which key and section can not be found
 		}
 		return buf;
 	}
@@ -72,8 +72,7 @@ namespace JEngine
 			filePath.wstring().c_str()
 		))
 		{
-			// TODO£º
-			// write log
+			ThrowException("Fail to write file " + filePath.string());
 		}
 	}
 	void IniFileReader::Write(const std::string& section, const std::string& key, const std::string& value) const
@@ -85,8 +84,7 @@ namespace JEngine
 			filePath.string().c_str()
 		))
 		{
-			// TODO£º
-			// write log
+			ThrowException("Fail to write file " + filePath.string());
 		}
 	}
 	void IniFileReader::Write(const std::wstring& section, const std::wstring& key, const int value) const
