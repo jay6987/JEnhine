@@ -96,7 +96,7 @@ namespace UTPipeline
 		pipeIn = BranchPipeFromTrunk<ByteVec>("InputCharacters");
 		pipeIn->SetConsumer(GetAgentName(), GetNumThreads(), 1, 0);
 
-		pipeOut = std::make_shared<Pipe<ByteVec>>("OutputCharacters");
+		pipeOut = CreateNewPipe<ByteVec>("OutputCharacters");
 		pipeOut->SetProducer(GetAgentName(), 1, 1);
 		pipeOut->SetTemplate(ByteVec(1), { 1 });
 		MergePipeToTrunk(pipeOut);

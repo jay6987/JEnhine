@@ -58,6 +58,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -73,6 +74,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -82,16 +84,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="FilterAgent.h" />
     <ClInclude Include="FilterCore.h" />
     <ClInclude Include="PreFilterWeightGenerator.h" />
+    <ClInclude Include="ZFilterAgent.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="FilterAgent.cpp" />
     <ClCompile Include="FilterCore.cpp" />
     <ClCompile Include="PreFilterWeightGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Performance\Performance.vcxproj">
       <Project>{d3d254be-e49a-437d-9cda-8d0d3cbe516c}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Pipeline\Pipeline.vcxproj">
+      <Project>{04d80528-8575-4855-8807-5c9bb465dd77}</Project>
     </ProjectReference>
     <ProjectReference Include="..\TransformMatrix\TransformMatrix.vcxproj">
       <Project>{b1fbb58b-a418-4db9-9f8d-06759374d603}</Project>

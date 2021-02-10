@@ -54,12 +54,18 @@ namespace JEngine
 		template<typename PipeType>
 		std::shared_ptr<Pipe<PipeType>> BranchPipeFromTrunk(const std::string&& name);
 
+		// use this function to create new pipe, 
+		// then the pipe will be foced closed when a thread throw an exception.
+		template<typename PipeType>
+		std::shared_ptr<Pipe<PipeType>> CreateNewPipe(const std::string&& name);
+
 		template<typename PipeType>
 		void MergePipeToTrunk(std::shared_ptr<Pipe<PipeType>> branch);
 
+		// collect all pipes that connected to other agents.
 		std::set<std::shared_ptr<PipeBase>> connectedPipes;
 
-		void CloseConnectedPipes();
+		void CloseAllConnectedPipes();
 
 		class WaitAsyncScope;
 
@@ -146,7 +152,19 @@ namespace JEngine
 	template<typename PipeType>
 	inline void AgentBase::MergePipeToTrunk(std::shared_ptr<Pipe<PipeType>> branch)
 	{
+		if (connectedPipes.count(branch) == 0)
+		{
+			ThrowExceptionAndLog("Please use CreateNewPipe<PipeType>() to create a pipe");
+		}
 		trunk.push_back(branch);
-		connectedPipes.insert(branch);
 	}
+
+	template<typename PipeType>
+	inline std::shared_ptr<Pipe<PipeType>> AgentBase::CreateNewPipe(const std::string&& name)
+	{
+		std::shared_ptr<Pipe<PipeType>> pipe = std::make_shared<Pipe<PipeType>>(name);
+		connectedPipes.insert(pipe);
+		return pipe;
+	}
+
 }

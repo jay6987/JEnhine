@@ -31,6 +31,11 @@ namespace JEngine
 		virtual void WorkFlow2() {}
 		virtual void WorkFlow3() {}
 		virtual void WorkFlow4() {}
+		virtual void WorkFlow5() {}
+		virtual void WorkFlow6() {}
+		virtual void WorkFlow7() {}
+		virtual void WorkFlow8() {}
+		virtual void WorkFlow9() {}
 
 	private:
 

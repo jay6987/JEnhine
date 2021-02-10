@@ -17,12 +17,21 @@
     <ClInclude Include="PreFilterWeightGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FilterAgent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ZFilterAgent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FilterCore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PreFilterWeightGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FilterAgent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

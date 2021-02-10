@@ -22,7 +22,7 @@ namespace JEngine
 		pipes = trunk;
 	}
 
-	void AgentBase::CloseConnectedPipes()
+	void AgentBase::CloseAllConnectedPipes()
 	{
 		std::lock_guard lk(closePipeMutex);
 		for (std::shared_ptr<PipeBase> pipe : connectedPipes)

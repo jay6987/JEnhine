@@ -33,7 +33,7 @@ namespace JEngine
 		{
 			w.get();
 		}
-		CloseConnectedPipes();
+		CloseAllConnectedPipes();
 	}
 
 	void SequentialAgentBase::WorkFlowWrappd(int index)
@@ -52,8 +52,18 @@ namespace JEngine
 				WorkFlow3(); break;
 			case 4:
 				WorkFlow4(); break;
+			case 5:
+				WorkFlow5(); break;
+			case 6:
+				WorkFlow6(); break;
+			case 7:
+				WorkFlow7(); break;
+			case 8:
+				WorkFlow8(); break;
+			case 9:
+				WorkFlow9(); break;
 			default:
-				ThrowException("SequentialAgentBase can only contains less than 6 steps");
+				ThrowException("SequentialAgentBase can only ontain less than 10 steps");
 			}
 		}
 		catch (Exception&)
@@ -61,21 +71,21 @@ namespace JEngine
 			std::stringstream ss;
 			ss << GetAgentName() << " step #"<< index << " die, because of an Exception. ";
 			GLog(ss.str());
-			CloseConnectedPipes();
+			CloseAllConnectedPipes();
 		}
 		catch (std::exception& e)
 		{
 			std::stringstream ss;
 			ss << GetAgentName() << " step #" << index << " die, " << e.what();
 			GLog(ss.str());
-			CloseConnectedPipes();
+			CloseAllConnectedPipes();
 		}
 		catch (...)
 		{
 			std::stringstream ss;
 			ss << GetAgentName() << " step #" << index << " die, unknown exception.";
 			GLog(ss.str());
-			CloseConnectedPipes();
+			CloseAllConnectedPipes();
 		}
 	}
 
