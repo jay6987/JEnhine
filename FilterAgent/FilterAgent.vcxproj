@@ -93,6 +93,7 @@
     <ClCompile Include="FilterAgent.cpp" />
     <ClCompile Include="FilterCore.cpp" />
     <ClCompile Include="PreFilterWeightGenerator.cpp" />
+    <ClCompile Include="ZFilterAgent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Performance\Performance.vcxproj">
