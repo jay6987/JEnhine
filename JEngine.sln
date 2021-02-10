@@ -27,6 +27,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FilterAgent", "FilterAgent\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UTFilterAgent", "UnitTests\UTFilterAgent\UTFilterAgent.vcxproj", "{4BE61477-5F8B-4DD0-B6C1-B9292F050970}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PreProcessingAgent", "PreProcessingAgent\PreProcessingAgent.vcxproj", "{E2284B5B-9C1B-4B46-ADBE-51496FE8D164}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -81,6 +83,10 @@ Global
 		{4BE61477-5F8B-4DD0-B6C1-B9292F050970}.Debug|x64.Build.0 = Debug|x64
 		{4BE61477-5F8B-4DD0-B6C1-B9292F050970}.Release|x64.ActiveCfg = Release|x64
 		{4BE61477-5F8B-4DD0-B6C1-B9292F050970}.Release|x64.Build.0 = Release|x64
+		{E2284B5B-9C1B-4B46-ADBE-51496FE8D164}.Debug|x64.ActiveCfg = Debug|x64
+		{E2284B5B-9C1B-4B46-ADBE-51496FE8D164}.Debug|x64.Build.0 = Debug|x64
+		{E2284B5B-9C1B-4B46-ADBE-51496FE8D164}.Release|x64.ActiveCfg = Release|x64
+		{E2284B5B-9C1B-4B46-ADBE-51496FE8D164}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
