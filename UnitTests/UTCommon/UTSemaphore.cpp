@@ -10,7 +10,7 @@ namespace UTCommon
 {
 
 	const int chances = 100;
-	const double tolerance = 0.001;
+	const double tolerance = 0.01;
 	const double timeToWait = 0.2;
 
 	TEST(SemaphoreTest, WaitSignal)

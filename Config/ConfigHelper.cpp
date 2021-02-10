@@ -40,9 +40,17 @@ namespace JEngine
 
 		scanParams.BrightField = reader.GetFloat(section, L"Bright_Field", L"v");
 
+		scanParams.BeamHardeningParams.clear();
+		scanParams.BeamHardeningParams = reader.GetFloatVec(section, L"BeamHardeningParams", L"v", FloatVec{ 1.0f,0.0f,0.0f }, L"|");
+		if (scanParams.BeamHardeningParams.size() != 3)
+			ThrowException("The number of parameters in BeamHardeningParams should be 3.");
+
 		scanParams.InputNameTemplate = reader.GetWString(section, L"Input_Name_Template", L"v");
 
 		// calculated parameters
+
+		const float detectorSizeAtISO = scanParams.DetectorPixelSize / scanParams.DSD * scanParams.DSO;
+		scanParams.HalfSampleRate = 0.5f * (1.0f / detectorSizeAtISO);
 
 		scanParams.NumUsedDetsU =
 			scanParams.NumDetsU -
@@ -55,8 +63,12 @@ namespace JEngine
 			scanParams.BorderSizeDown;
 	}
 
+
+
 	void ConfigHelper::ReadReconParams()
 	{
+		reconParams.MuWater = 0.02f;
+
 		const std::wstring section = L"AVR_CBCT_Reconstruction_Engine";
 
 		reconParams.NumPixelsX = reader.GetInt(section, L"Volume_Horizontal_Size", L"v");
@@ -82,13 +94,54 @@ namespace JEngine
 		reconParams.FOVDiameter = reader.GetFloat(section, L"FOV_Diameter", L"v");
 
 		reconParams.MARIterations = reader.GetFloat(section, L"Metal_Streak_Correction", L"v") > 0.0f ? 1 : 0;
+
+		reconParams.FilterCutOffStart = reader.GetFloat(section, L"Filter_Cut_Off_Start", L"v", float(0));
+		reconParams.FilterCutOffEnd = reader.GetFloat(section, L"Filter_Cut_Off_End", L"v", float(0));
+
+		reconParams.FilterAdjustPoints = reader.GetFloatVec(section, L"Filter_Adjust_Points", L"v", FloatVec(0), L"|");
+		reconParams.FilterAdjustLevelInDB = reader.GetFloatVec(section, L"Filter_Adjust_LevelInDB", L"v", FloatVec(0), L"|");
+
+		reconParams.GeometricBiliteralFilterRadiusGradiant
+			= std::max(0, (reader.GetInt(
+				section, L"PostproOrientF_ApertureGrad", L"v", int(5)) - 1) / 2);
+		reconParams.GeometricBiliteralFilterSpatialDeviat
+			= reader.GetFloat(
+				section, L"PostproOrientF_SpatialDeviat", L"v", float(2.f));
+		reconParams.GeometricBiliteralFilterSignalDeviat
+			= reader.GetFloat(
+				section, L"PostproOrientF_SignalDeviat", L"v", float(1000));
+
+		reconParams.BiliteralFilterRadiusGradiant
+			= std::max(0, (reader.GetInt(
+				section, L"BilateralFilter_ApertureGrad", L"v", int(5)) - 1) / 2);
+		reconParams.BiliteralFilterSpatialDeviat
+			= reader.GetFloat(
+				section, L"BilateralFilter_SpatialDeviat", L"v", float(2.f));
+		reconParams.BiliteralFilterSignalDeviat
+			= reader.GetFloat(
+				section, L"BilateralFilter_SignalDeviat", L"v", float(1000));
+
+		reconParams.BiliteralFilterNormalizationMaxMin = reader.GetFloatVec(
+			section, L"BilateralFilter_NormalizationMaxMin", L"v", FloatVec{ 0.0f,8.0f }, L"|");
+		if (reconParams.BiliteralFilterNormalizationMaxMin.size() != 2)
+			ThrowException("The number of parameters in BiliteralFilterNormalizationMaxMin should be 2.");
+
+		reconParams.BilateralFilterThresholdMaxMin = reader.GetFloatVec(
+			section, L"BilateralFilter_ThresholdMaxMin", L"v", FloatVec{ 0.05f,0.02f }, L"|");
+		if (reconParams.BilateralFilterThresholdMaxMin.size() != 2)
+			ThrowException("The number of parameters in BilateralFilterThresholdMaxMin should be 2.");
+
+		reconParams.BilateralFilterDentalWeight = reader.GetFloat(
+			section, L"BilateralFilter_DentalWeight", L"v", float(1.0f));
+
 		if (reconParams.MARIterations > 0)
 		{
-			const float MU_WATER = 0.02f;
 			float metalThreshold_HU = reader.GetFloat(section, L"Metal_Streak_Correction", L"v");
 			metalThreshold_HU = (metalThreshold_HU - 300.0f) / reconParams.CTNumNorm1 + 300.0f;
 			metalThreshold_HU = (metalThreshold_HU + 1000.0f) / reconParams.CTNumNorm0 - 1000.0f;
-			reconParams.MetalThredshold = (metalThreshold_HU + 1000.0f) / 1000.0f * MU_WATER;
+			reconParams.MetalThredshold = (metalThreshold_HU + 1000.0f) / 1000.0f * reconParams.MuWater;
 		}
+
+		reconParams.SinusFixHeadPosition = reader.GetInt(section, L"Head_Position_1ForFront_2ForBack", L"v", int(0));
 	}
 }

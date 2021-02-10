@@ -9,7 +9,7 @@ using namespace JEngine;
 namespace UTCommon
 {
 	const double timeToWait = 0.2;
-	const double tolerance = 0.001;
+	const double tolerance = 0.01;
 	const int chances = 100;
 
 
