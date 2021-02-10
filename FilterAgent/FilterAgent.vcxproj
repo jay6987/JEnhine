@@ -83,13 +83,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="FilterCore.h" />
+    <ClInclude Include="PreFilterWeightGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FilterCore.cpp" />
+    <ClCompile Include="PreFilterWeightGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Performance\Performance.vcxproj">
       <Project>{d3d254be-e49a-437d-9cda-8d0d3cbe516c}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\TransformMatrix\TransformMatrix.vcxproj">
+      <Project>{b1fbb58b-a418-4db9-9f8d-06759374d603}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

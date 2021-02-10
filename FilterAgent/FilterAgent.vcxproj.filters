@@ -14,9 +14,15 @@
     <ClInclude Include="FilterCore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PreFilterWeightGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FilterCore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PreFilterWeightGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
