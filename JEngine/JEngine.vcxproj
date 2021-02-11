@@ -13,19 +13,19 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{f936ce63-1123-4b61-b73b-679c381282ec}</ProjectGuid>
-    <RootNamespace>Config</RootNamespace>
+    <ProjectGuid>{a23f50fa-6d74-4759-a8d6-70ba66192ca2}</ProjectGuid>
+    <RootNamespace>JEngine</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -45,11 +45,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ThirdPartyLibraries)\boost_1_72_0;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(ThirdPartyLibraries)\mkl_2020.0.166\lib\intel64_win;$(ThirdPartyLibraries)\ipp_2020.0.166\lib\intel64_win;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ThirdPartyLibraries)\boost_1_72_0;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(ThirdPartyLibraries)\mkl_2020.0.166\lib\intel64_win;$(ThirdPartyLibraries)\ipp_2020.0.166\lib\intel64_win;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -84,23 +84,46 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ConfigHelper.h" />
-    <ClInclude Include="PipeDumpLoadReader.h" />
-    <ClInclude Include="IniFileReader.h" />
-    <ClInclude Include="ReconParams.h" />
-    <ClInclude Include="ScanParams.h" />
-    <ClInclude Include="XmlFileReader.h" />
+    <ClInclude Include="InputAgent.h" />
+    <ClInclude Include="OutputAgent.h" />
+    <ClInclude Include="PTMReader.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ConfigHelper.cpp" />
-    <ClCompile Include="PipeDumpLoadReader.cpp" />
-    <ClCompile Include="IniFileReader.cpp" />
-    <ClCompile Include="XmlFileReader.cpp" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\BPAgent\BPAgent.vcxproj">
+      <Project>{a7ea2524-db80-4548-986b-e5d54737e2f5}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Common\Common.vcxproj">
       <Project>{edc87f9f-963f-40bf-97d9-45dc8c245648}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\CompositeAgent\CompositeAgent.vcxproj">
+      <Project>{e14ed7dd-438c-4962-9abe-fb463db06e6b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Config\Config.vcxproj">
+      <Project>{f936ce63-1123-4b61-b73b-679c381282ec}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\FilterAgent\FilterAgent.vcxproj">
+      <Project>{fcd854dd-ff7b-4b7c-964a-59ebd8001526}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Performance\Performance.vcxproj">
+      <Project>{d3d254be-e49a-437d-9cda-8d0d3cbe516c}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Pipeline\Pipeline.vcxproj">
+      <Project>{04d80528-8575-4855-8807-5c9bb465dd77}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\PreProcessingAgent\PreProcessingAgent.vcxproj">
+      <Project>{e2284b5b-9c1b-4b46-adbe-51496fe8d164}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\ProgressManager\ProgressManager.vcxproj">
+      <Project>{9d617354-4fb0-4f9e-84ad-18919e095aca}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\TransformMatrix\TransformMatrix.vcxproj">
+      <Project>{b1fbb58b-a418-4db9-9f8d-06759374d603}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="InputAgent.cpp" />
+    <ClCompile Include="JEngine.cpp" />
+    <ClCompile Include="OutputAgent.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

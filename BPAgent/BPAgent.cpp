@@ -29,7 +29,7 @@ namespace JEngine
 
 	void BPAgent::SetPipesImpl()
 	{
-		pPipeIn = BranchPipeFromTrunk<FloatVec>("ZFilteredProj");
+		pPipeIn = BranchPipeFromTrunk<FloatVec>("Proj");
 
 		pPipeIn->SetConsumer(GetAgentName(),
 			1, 1, 0);

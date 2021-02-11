@@ -9,38 +9,30 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="XmlFileReader.h">
+    <ClInclude Include="PTMReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ScanParams.h">
+    <ClInclude Include="InputAgent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ConfigHelper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ReconParams.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IniFileReader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PipeDumpLoadReader.h">
+    <ClInclude Include="OutputAgent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="XmlFileReader.cpp">
+    <ClCompile Include="InputAgent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ConfigHelper.cpp">
+    <ClCompile Include="OutputAgent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IniFileReader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PipeDumpLoadReader.cpp">
+    <ClCompile Include="JEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

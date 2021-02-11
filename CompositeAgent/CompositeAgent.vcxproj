@@ -13,8 +13,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{f936ce63-1123-4b61-b73b-679c381282ec}</ProjectGuid>
-    <RootNamespace>Config</RootNamespace>
+    <ProjectGuid>{e14ed7dd-438c-4962-9abe-fb463db06e6b}</ProjectGuid>
+    <RootNamespace>CompositeAgent</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -45,11 +45,9 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ThirdPartyLibraries)\boost_1_72_0;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ThirdPartyLibraries)\boost_1_72_0;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -84,22 +82,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ConfigHelper.h" />
-    <ClInclude Include="PipeDumpLoadReader.h" />
-    <ClInclude Include="IniFileReader.h" />
-    <ClInclude Include="ReconParams.h" />
-    <ClInclude Include="ScanParams.h" />
-    <ClInclude Include="XmlFileReader.h" />
+    <ClInclude Include="CompositeAgent.h" />
+    <ClInclude Include="CompositeCore.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ConfigHelper.cpp" />
-    <ClCompile Include="PipeDumpLoadReader.cpp" />
-    <ClCompile Include="IniFileReader.cpp" />
-    <ClCompile Include="XmlFileReader.cpp" />
+    <ClCompile Include="CompositeCore.cpp" />
+    <ClCompile Include="CompositeAgent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.vcxproj">
-      <Project>{edc87f9f-963f-40bf-97d9-45dc8c245648}</Project>
+    <ProjectReference Include="..\Performance\Performance.vcxproj">
+      <Project>{d3d254be-e49a-437d-9cda-8d0d3cbe516c}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Pipeline\Pipeline.vcxproj">
+      <Project>{04d80528-8575-4855-8807-5c9bb465dd77}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\TransformMatrix\TransformMatrix.vcxproj">
+      <Project>{b1fbb58b-a418-4db9-9f8d-06759374d603}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

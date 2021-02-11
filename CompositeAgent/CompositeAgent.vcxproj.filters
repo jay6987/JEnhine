@@ -11,36 +11,18 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="XmlFileReader.h">
+    <ClInclude Include="CompositeCore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ScanParams.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ConfigHelper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ReconParams.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IniFileReader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PipeDumpLoadReader.h">
+    <ClInclude Include="CompositeAgent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="XmlFileReader.cpp">
+    <ClCompile Include="CompositeCore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ConfigHelper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="IniFileReader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PipeDumpLoadReader.cpp">
+    <ClCompile Include="CompositeAgent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

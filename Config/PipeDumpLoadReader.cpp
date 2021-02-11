@@ -14,13 +14,17 @@ namespace JEngine
 	}
 	bool PipeDumpLoadReader::CheckDump(
 		std::filesystem::path& dumpPath,
-		const std::string pipeName) noexcept
+		const std::string& pipeName,
+		const std::string& producer,
+		const std::string& consumer) noexcept
 	{
 		try
 		{
 			dumpPath = reader->GetWString(
 				L"Pipe_dump_load_list",
-				std::wstring(pipeName.begin(), pipeName.end()),
+				std::wstring(pipeName.begin(), pipeName.end()) + L"_" +
+				std::wstring(producer.begin(), producer.end()) + L"_" +
+				std::wstring(consumer.begin(), consumer.end()),
 				L"dump");
 			return true;
 		}
@@ -31,13 +35,17 @@ namespace JEngine
 	}
 	bool PipeDumpLoadReader::CheckLoad(
 		std::filesystem::path& loadPath,
-		const std::string pipeName) noexcept
+		const std::string& pipeName,
+		const std::string& producer,
+		const std::string& consumer) noexcept
 	{
 		try
 		{
 			loadPath = reader->GetWString(
 				L"Pipe_dump_load_list",
-				std::wstring(pipeName.begin(), pipeName.end()),
+				std::wstring(pipeName.begin(), pipeName.end()) + L"_" +
+				std::wstring(producer.begin(), producer.end()) + L"_" +
+				std::wstring(consumer.begin(), consumer.end()),
 				L"load");
 			return true;
 		}

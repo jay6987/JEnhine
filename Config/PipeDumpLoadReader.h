@@ -17,9 +17,19 @@ namespace JEngine
 	public:
 		PipeDumpLoadReader(const std::filesystem::path& configFile);
 
-		bool CheckDump(std::filesystem::path& dumpPath, const std::string pipeName) noexcept;
+		bool CheckDump(
+			std::filesystem::path& dumpPath,
+			const std::string& pipeName,
+			const std::string& producer,
+			const std::string& consumer)
+			noexcept;
 
-		bool CheckLoad(std::filesystem::path& loadPath, const std::string pipeName) noexcept;
+		bool CheckLoad(
+			std::filesystem::path& loadPath,
+			const std::string& pipeName,
+			const std::string& producer,
+			const std::string& consumer)
+			noexcept;
 
 		bool ConfigFileExist() const { return reader.get(); };
 
