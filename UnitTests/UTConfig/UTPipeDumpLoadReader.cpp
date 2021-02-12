@@ -1,6 +1,6 @@
 #include "pch.h"
 
-#include "../../Config/PipeDumpLoadReader.h"
+#include "..\..\Config\PipeDumpLoadReader.h"
 
 using namespace JEngine;
 
@@ -17,14 +17,14 @@ TEST(PipeDumpLoadTest, ReadDumpLoadPath) {
 
 	std::filesystem::path dumpLoadPath;
 
-	EXPECT_TRUE(reader.CheckDump(dumpLoadPath, "Prep"));
+	EXPECT_TRUE(reader.CheckDump(dumpLoadPath, "Prep", "PrepAgent", "FilterAgent"));
 	EXPECT_STREQ(dumpLoadPath.c_str(), L"D:\\Data\\Proj_12\\prepDump.bin");
 
-	EXPECT_FALSE(reader.CheckDump(dumpLoadPath, "NotExist"));
+	EXPECT_FALSE(reader.CheckDump(dumpLoadPath, "NotExist", "NotExist", "NotExist"));
 
-	EXPECT_TRUE(reader.CheckLoad(dumpLoadPath, "Prep"));
+	EXPECT_TRUE(reader.CheckLoad(dumpLoadPath, "Prep", "PrepAgent", "FilterAgent"));
 	EXPECT_STREQ(dumpLoadPath.c_str(), L"D:\\Data\\Proj_12\\prepLoad.bin");
 
-	EXPECT_FALSE(reader.CheckLoad(dumpLoadPath, "NotExist"));
+	EXPECT_FALSE(reader.CheckLoad(dumpLoadPath, "NotExist", "NotExist", "NotExist"));
 
 }

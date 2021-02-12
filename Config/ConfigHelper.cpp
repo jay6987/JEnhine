@@ -143,5 +143,8 @@ namespace JEngine
 		}
 
 		reconParams.SinusFixHeadPosition = reader.GetInt(section, L"Head_Position_1ForFront_2ForBack", L"v", int(0));
+
+
+		reconParams.DoesBPUseGPU = true;
 	}
 }

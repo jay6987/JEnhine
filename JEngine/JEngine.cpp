@@ -18,11 +18,11 @@
 #include "../FilterAgent/ZFilterAgent.h"
 #include "../BPAgent/BPAgent.h"
 //#include "../BiliteralFilterAgent/BiliteralFilterCPUAgent.h"
-//#include "../BPCUDAAgent/BPCUDAUploadAgent.h"
-//#include "../BPCUDAAgent/BPCUDAAgent.h"
+#include "../BPCUDAAgent/BPCUDAUploadAgent.h"
+#include "../BPCUDAAgent/BPCUDAAgent.h"
 //#include "../BPCUDAAgent/GeometricBilateralFilterAgent.h"
 //#include "../BPCUDAAgent/BilateralFilterAgent.h"
-//#include "../BPCUDAAgent/BPCUDADownloadAgent.h"
+#include "../BPCUDAAgent/BPCUDADownloadAgent.h"
 //#include "../MetalArtifactReductionAgents/MetalExtractAgent.h"
 //#include "../MetalArtifactReductionAgents/MetalForwardProjectAgent.h"
 //#include "../MetalArtifactReductionAgents/MetalProjReplaceAgent.h"
@@ -244,8 +244,41 @@ int main()
 							scanParams.NumUsedDetsV
 							));
 
-					
-					agents.emplace_back(
+
+					if (reconParams.DoesBPUseGPU)
+					{
+						agents.emplace_back(
+							make_shared<BPCUDAUploatAgent>(
+								scanParams.NumUsedDetsU,
+								scanParams.NumUsedDetsV
+								));
+
+						filesystem::path tempFileFolder(lpFilename);
+
+						agents.emplace_back(
+							make_shared<BPCUDAAgent>(
+								projectionMatrices,
+								scanParams.NumUsedDetsU,
+								scanParams.NumUsedDetsV,
+								reconParams.NumPixelsX,
+								reconParams.NumPixelsY,
+								reconParams.NumPixelsZ,
+								reconParams.PitchXY,
+								reconParams.PitchZ,
+								numSlicesPerRecon,
+								numReconParts,
+								tempFileFolder.parent_path().append("temp")
+								));
+
+						agents.emplace_back(
+							make_shared<BPCUDADownloatAgent>(
+								reconParams.NumPixelsX,
+								reconParams.NumPixelsY
+								));
+					}
+					else
+					{
+						agents.emplace_back(
 							make_shared<BPAgent>(
 								nBPThreads,
 								projectionMatrices,
@@ -257,11 +290,7 @@ int main()
 								reconParams.PitchXY,
 								reconParams.PitchZ
 								));
-
-
-
-
-
+					}
 
 					agents.emplace_back(
 						make_shared<OutputAgent>(

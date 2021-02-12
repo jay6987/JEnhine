@@ -33,6 +33,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 11.1.props" />
   </ImportGroup>
   <ImportGroup Label="Shared">
   </ImportGroup>
@@ -91,6 +92,9 @@
   <ItemGroup>
     <ProjectReference Include="..\BPAgent\BPAgent.vcxproj">
       <Project>{a7ea2524-db80-4548-986b-e5d54737e2f5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\BPCUDAAgent\BPCUDAAgent.vcxproj">
+      <Project>{10920ee1-5dd0-4050-94a5-cd710f60f803}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Common\Common.vcxproj">
       <Project>{edc87f9f-963f-40bf-97d9-45dc8c245648}</Project>
