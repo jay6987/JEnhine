@@ -13,19 +13,19 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{a23f50fa-6d74-4759-a8d6-70ba66192ca2}</ProjectGuid>
-    <RootNamespace>JEngine</RootNamespace>
+    <ProjectGuid>{3eba4860-3282-49c3-b86f-f3cc77be1b2d}</ProjectGuid>
+    <RootNamespace>CTNumAgent</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -33,7 +33,6 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
-    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 11.1.props" />
   </ImportGroup>
   <ImportGroup Label="Shared">
   </ImportGroup>
@@ -46,20 +45,17 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>$(ThirdPartyLibraries)\mkl_2020.0.166\lib\intel64_win;$(ThirdPartyLibraries)\ipp_2020.0.166\lib\intel64_win;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <LibraryPath>$(ThirdPartyLibraries)\mkl_2020.0.166\lib\intel64_win;$(ThirdPartyLibraries)\ipp_2020.0.166\lib\intel64_win;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level4</WarningLevel>
+      <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -68,14 +64,13 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level4</WarningLevel>
+      <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -85,31 +80,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="InputAgent.h" />
-    <ClInclude Include="OutputAgent.h" />
-    <ClInclude Include="PTMReader.h" />
+    <ClInclude Include="CTNumAgent.h" />
+    <ClInclude Include="CTNumCore.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BPAgent\BPAgent.vcxproj">
-      <Project>{a7ea2524-db80-4548-986b-e5d54737e2f5}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\BPCUDAAgent\BPCUDAAgent.vcxproj">
-      <Project>{10920ee1-5dd0-4050-94a5-cd710f60f803}</Project>
-    </ProjectReference>
+    <ClCompile Include="CTNumAgent.cpp" />
+    <ClCompile Include="CTNumCore.cpp" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Common\Common.vcxproj">
       <Project>{edc87f9f-963f-40bf-97d9-45dc8c245648}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\CompositeAgent\CompositeAgent.vcxproj">
-      <Project>{e14ed7dd-438c-4962-9abe-fb463db06e6b}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Config\Config.vcxproj">
-      <Project>{f936ce63-1123-4b61-b73b-679c381282ec}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\CTNumAgent\CTNumAgent.vcxproj">
-      <Project>{3eba4860-3282-49c3-b86f-f3cc77be1b2d}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\FilterAgent\FilterAgent.vcxproj">
-      <Project>{fcd854dd-ff7b-4b7c-964a-59ebd8001526}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Performance\Performance.vcxproj">
       <Project>{d3d254be-e49a-437d-9cda-8d0d3cbe516c}</Project>
@@ -117,20 +97,6 @@
     <ProjectReference Include="..\Pipeline\Pipeline.vcxproj">
       <Project>{04d80528-8575-4855-8807-5c9bb465dd77}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\PreProcessingAgent\PreProcessingAgent.vcxproj">
-      <Project>{e2284b5b-9c1b-4b46-adbe-51496fe8d164}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\ProgressManager\ProgressManager.vcxproj">
-      <Project>{9d617354-4fb0-4f9e-84ad-18919e095aca}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\TransformMatrix\TransformMatrix.vcxproj">
-      <Project>{b1fbb58b-a418-4db9-9f8d-06759374d603}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="InputAgent.cpp" />
-    <ClCompile Include="JEngine.cpp" />
-    <ClCompile Include="OutputAgent.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

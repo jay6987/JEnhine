@@ -153,6 +153,7 @@ namespace JEngine
 		}
 		catch (PipeClosedAndEmptySignal&)
 		{
+			pPipePreWeight->Close();
 			pPipeOut->Close();
 		}
 	}

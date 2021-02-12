@@ -26,7 +26,7 @@
 //#include "../MetalArtifactReductionAgents/MetalExtractAgent.h"
 //#include "../MetalArtifactReductionAgents/MetalForwardProjectAgent.h"
 //#include "../MetalArtifactReductionAgents/MetalProjReplaceAgent.h"
-//#include "../CTNumAgent/CTNumAgent.h"
+#include "../CTNumAgent/CTNumAgent.h"
 //#include "../SinusFixAgent/SinusFixAgent.h"
 //#include "../PreOutputAgent/PreOutputAgent.h"
 #include "OutputAgent.h"
@@ -291,6 +291,16 @@ int main()
 								reconParams.PitchZ
 								));
 					}
+
+					agents.emplace_back(
+						make_shared<CTNumAgent>(
+							nThreads,
+							reconParams.NumPixelsX,
+							reconParams.NumPixelsY,
+							reconParams.CTNumNorm0,
+							reconParams.CTNumNorm1,
+							reconParams.MuWater
+							));
 
 					agents.emplace_back(
 						make_shared<OutputAgent>(
