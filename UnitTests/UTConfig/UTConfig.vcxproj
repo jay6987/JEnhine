@@ -38,6 +38,9 @@
     <ClCompile Include="UTXmlFileReader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common.vcxproj">
+      <Project>{edc87f9f-963f-40bf-97d9-45dc8c245648}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\Config\Config.vcxproj">
       <Project>{f936ce63-1123-4b61-b73b-679c381282ec}</Project>
     </ProjectReference>

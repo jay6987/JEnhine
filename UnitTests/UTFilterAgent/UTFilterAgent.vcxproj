@@ -47,8 +47,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common.vcxproj">
+      <Project>{edc87f9f-963f-40bf-97d9-45dc8c245648}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\FilterAgent\FilterAgent.vcxproj">
       <Project>{fcd854dd-ff7b-4b7c-964a-59ebd8001526}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Performance\Performance.vcxproj">
+      <Project>{d3d254be-e49a-437d-9cda-8d0d3cbe516c}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\TransformMatrix\TransformMatrix.vcxproj">
+      <Project>{b1fbb58b-a418-4db9-9f8d-06759374d603}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemDefinitionGroup />

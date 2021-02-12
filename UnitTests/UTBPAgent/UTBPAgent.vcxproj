@@ -48,6 +48,12 @@
     <ProjectReference Include="..\..\BPCUDAAgent\BPCUDAAgent.vcxproj">
       <Project>{10920ee1-5dd0-4050-94a5-cd710f60f803}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\Common\Common.vcxproj">
+      <Project>{edc87f9f-963f-40bf-97d9-45dc8c245648}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Performance\Performance.vcxproj">
+      <Project>{d3d254be-e49a-437d-9cda-8d0d3cbe516c}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -28,20 +28,6 @@
     <ClInclude Include="Tex2D.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.vcxproj">
-      <Project>{edc87f9f-963f-40bf-97d9-45dc8c245648}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Performance\Performance.vcxproj">
-      <Project>{d3d254be-e49a-437d-9cda-8d0d3cbe516c}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Pipeline\Pipeline.vcxproj">
-      <Project>{04d80528-8575-4855-8807-5c9bb465dd77}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\TransformMatrix\TransformMatrix.vcxproj">
-      <Project>{b1fbb58b-a418-4db9-9f8d-06759374d603}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <CudaCompile Include="BPCUDACore.cu" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

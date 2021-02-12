@@ -100,11 +100,6 @@
     <ClCompile Include="PipeDumpLoadImpl.cpp" />
     <ClCompile Include="SequentialAgentBase.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Common\Common.vcxproj">
-      <Project>{edc87f9f-963f-40bf-97d9-45dc8c245648}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

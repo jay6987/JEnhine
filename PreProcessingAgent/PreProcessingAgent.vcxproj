@@ -96,11 +96,6 @@
     <ClCompile Include="PreProcessingAgent.cpp" />
     <ClCompile Include="PreProcessingCore.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Performance\Performance.vcxproj">
-      <Project>{d3d254be-e49a-437d-9cda-8d0d3cbe516c}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
