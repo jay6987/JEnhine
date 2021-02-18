@@ -13,8 +13,8 @@
   <ItemGroup>
     <ClCompile Include="BPCUDAAgent.cpp" />
     <ClCompile Include="BPCUDACore.cpp" />
-    <ClCompile Include="BPCUDADownloadAgent.cpp" />
-    <ClCompile Include="BPCUDAUploadAgent.cpp" />
+    <ClCompile Include="DeviceMemoryDownloadAgent.cpp" />
+    <ClCompile Include="Tex2DUploadAgent.cpp" />
     <ClCompile Include="DeviceMemory.cpp" />
     <ClCompile Include="PipeDumpLoadImplCUDA.cpp" />
     <ClCompile Include="Tex2DFloat.cpp" />
@@ -22,8 +22,8 @@
   <ItemGroup>
     <ClInclude Include="BPCUDAAgent.h" />
     <ClInclude Include="BPCUDACore.h" />
-    <ClInclude Include="BPCUDADownloadAgent.h" />
-    <ClInclude Include="BPCUDAUploadAgent.h" />
+    <ClInclude Include="DeviceMemoryDownloadAgent.h" />
+    <ClInclude Include="Tex2DUploadAgent.h" />
     <ClInclude Include="DeviceMemory.h" />
     <ClInclude Include="Tex2D.h" />
   </ItemGroup>

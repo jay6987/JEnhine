@@ -18,11 +18,11 @@
 #include "../FilterAgent/ZFilterAgent.h"
 #include "../BPAgent/BPAgent.h"
 //#include "../BiliteralFilterAgent/BiliteralFilterCPUAgent.h"
-#include "../BPCUDAAgent/BPCUDAUploadAgent.h"
+#include "../BPCUDAAgent/Tex2DUploadAgent.h"
 #include "../BPCUDAAgent/BPCUDAAgent.h"
 //#include "../BPCUDAAgent/GeometricBilateralFilterAgent.h"
 //#include "../BPCUDAAgent/BilateralFilterAgent.h"
-#include "../BPCUDAAgent/BPCUDADownloadAgent.h"
+#include "../BPCUDAAgent/DeviceMemoryDownloadAgent.h"
 //#include "../MetalArtifactReductionAgents/MetalExtractAgent.h"
 //#include "../MetalArtifactReductionAgents/MetalForwardProjectAgent.h"
 //#include "../MetalArtifactReductionAgents/MetalProjReplaceAgent.h"
@@ -248,7 +248,8 @@ int main()
 					if (reconParams.DoesBPUseGPU)
 					{
 						agents.emplace_back(
-							make_shared<BPCUDAUploatAgent>(
+							make_shared<Tex2DUploadAgent>(
+								"Proj",
 								scanParams.NumUsedDetsU,
 								scanParams.NumUsedDetsV
 								));
@@ -271,7 +272,8 @@ int main()
 								));
 
 						agents.emplace_back(
-							make_shared<BPCUDADownloatAgent>(
+							make_shared<DeviceMemoryDownloadAgent>(
+								"Slice",
 								reconParams.NumPixelsX,
 								reconParams.NumPixelsY
 								));
@@ -435,7 +437,7 @@ int main()
 						scanParams.NumViews * (reconParams.MARIterations + 1) * numReconParts * 2
 					);
 				}
-				else if (pipe->GetName() == "Proj" && pipe->GetProducer() == "BPCUDAUploadAgent")
+				else if (pipe->GetName() == "Proj" && pipe->GetProducer() == "Tex2DUploadAgent")
 				{
 					progressMgr.SetPipeToWatch(
 						pipe,

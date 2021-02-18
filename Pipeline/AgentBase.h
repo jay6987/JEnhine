@@ -52,12 +52,12 @@ namespace JEngine
 	protected:
 
 		template<typename PipeType>
-		std::shared_ptr<Pipe<PipeType>> BranchPipeFromTrunk(const std::string&& name);
+		std::shared_ptr<Pipe<PipeType>> BranchPipeFromTrunk(const std::string& name);
 
 		// use this function to create new pipe, 
 		// then the pipe will be foced closed when a thread throw an exception.
 		template<typename PipeType>
-		std::shared_ptr<Pipe<PipeType>> CreateNewPipe(const std::string&& name);
+		std::shared_ptr<Pipe<PipeType>> CreateNewPipe(const std::string& name);
 
 		template<typename PipeType>
 		void MergePipeToTrunk(std::shared_ptr<Pipe<PipeType>> branch);
@@ -131,7 +131,7 @@ namespace JEngine
 	};
 
 	template<typename PipeType>
-	inline std::shared_ptr<Pipe<PipeType>> AgentBase::BranchPipeFromTrunk(const std::string&& name)
+	inline std::shared_ptr<Pipe<PipeType>> AgentBase::BranchPipeFromTrunk(const std::string& name)
 	{
 		auto pipeIt = trunk.begin();
 		for (; pipeIt != trunk.end(); ++pipeIt)
@@ -160,7 +160,7 @@ namespace JEngine
 	}
 
 	template<typename PipeType>
-	inline std::shared_ptr<Pipe<PipeType>> AgentBase::CreateNewPipe(const std::string&& name)
+	inline std::shared_ptr<Pipe<PipeType>> AgentBase::CreateNewPipe(const std::string& name)
 	{
 		std::shared_ptr<Pipe<PipeType>> pipe = std::make_shared<Pipe<PipeType>>(name);
 		connectedPipes.insert(pipe);

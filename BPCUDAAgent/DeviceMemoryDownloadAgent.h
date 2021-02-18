@@ -3,8 +3,6 @@
 
 #pragma once
 
-// The file cuda_tuntime_api.h contains a non-unicode character
-#pragma warning(disable: 4819)
 #include "cuda_runtime.h"
 #include "..\Pipeline\SequentialAgentBase.h"
 #include "..\Pipeline\Pipe.h"
@@ -13,10 +11,11 @@
 
 namespace JEngine
 {
-	class BPCUDADownloatAgent : public SequentialAgentBase
+	class DeviceMemoryDownloadAgent : public SequentialAgentBase
 	{
 	public:
-		BPCUDADownloatAgent(
+		DeviceMemoryDownloadAgent(
+			const std::string& pipeName,
 			const size_t sizeX,
 			const size_t sizeY);
 
@@ -31,6 +30,7 @@ namespace JEngine
 
 		std::shared_ptr<Pipe<FloatVec>> pPipeOut;
 
+		const std::string pipeName;
 		const size_t sizeX;
 		const size_t sizeY;
 

@@ -7,7 +7,6 @@
 
 #include <sstream>
 
-#pragma warning(disable: 4819)
 #include "cuda_runtime.h"
 #include "device_launch_parameters.h"
 

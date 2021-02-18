@@ -6,7 +6,8 @@
                 "${workspaceFolder}/**",
                 "${ThirdPartyLibraries}/ipp_2020.0.166/include",
                 "${ThirdPartyLibraries}/mkl_2020.0.166/include",
-                "${ThirdPartyLibraries}/boost_1_72_0"
+                "${ThirdPartyLibraries}/boost_1_72_0",
+                "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.1/include"
             ],
             "defines": [
                 "_DEBUG",

@@ -1,33 +1,35 @@
 // Description:
-//   BPCUDAUploadAgent uploads data from host memory to CUDA device
+//   Tex2DUploadAgent uploads data from host memory to CUDA device
 
-#include "BPCUDAUploadAgent.h"
+#include "Tex2DUploadAgent.h"
 
 namespace JEngine
 {
-	BPCUDAUploatAgent::BPCUDAUploatAgent(
+	Tex2DUploadAgent::Tex2DUploadAgent(
+		const std::string& pipeName,
 		const size_t numDetectorsU,
 		const size_t numDetectorsV)
-		: SequentialAgentBase("BPCUDAUploadAgent", 1)
+		: SequentialAgentBase("Tex2DUploadAgent", 1)
+		, pipeName(pipeName)
 		, numDetectorsU(numDetectorsU)
 		, numDetectorsV(numDetectorsV)
 	{
 	}
 
-	void BPCUDAUploatAgent::SetPipesImpl()
+	void Tex2DUploadAgent::SetPipesImpl()
 	{
-		pPipeIn = BranchPipeFromTrunk<FloatVec>("Proj");
+		pPipeIn = BranchPipeFromTrunk<FloatVec>(pipeName);
 		pPipeIn->SetConsumer(GetAgentName(),
 			this->GetNumThreads(), 1, 0);
 
-		pPipeOut = CreateNewPipe<Tex2D<float>>("Proj");
+		pPipeOut = CreateNewPipe<Tex2D<float>>(pipeName);
 		pPipeOut->SetTemplate(Tex2D<float>(numDetectorsU, numDetectorsV), { numDetectorsU,numDetectorsV });
 		pPipeOut->SetProducer(GetAgentName(),
 			this->GetNumThreads(), 1);
 		MergePipeToTrunk(pPipeOut);
 	}
 
-	void BPCUDAUploatAgent::WorkFlow0()
+	void Tex2DUploadAgent::WorkFlow0()
 	{
 		cudaStream_t cudaStream;
 		cudaStreamCreate(&cudaStream);

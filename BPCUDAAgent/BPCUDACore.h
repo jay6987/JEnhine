@@ -2,8 +2,7 @@
 //   BPCUDACore back-project one view of projection into image voxels using CUDA.
 
 #pragma once
-// The file cuda_tuntime_api.h contains a non-unicode character
-#pragma warning(disable: 4819)
+
 #include "cuda_runtime.h"
 #include "..\Common\TypeDefs.h"
 #include "..\TransformMatrix\ProjectionMatrix.h"

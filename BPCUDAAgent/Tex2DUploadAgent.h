@@ -1,12 +1,10 @@
 // Description:
-//   BPCUDAUploadAgent uploads data from host memory to CUDA device
+//   Tex2DUploadAgent uploads data from host memory to CUDA device
 //
 // Copyright(c) 2019 - 2020 Fussen Technology Co., Ltd
 
 #pragma once
 
-// The file cuda_tuntime_api.h contains a non-unicode character
-#pragma warning(disable: 4819)
 #include "cuda_runtime.h"
 #include "..\Pipeline\SequentialAgentBase.h"
 #include "..\Pipeline\Pipe.h"
@@ -15,10 +13,11 @@
 
 namespace JEngine
 {
-	class BPCUDAUploatAgent : public SequentialAgentBase
+	class Tex2DUploadAgent : public SequentialAgentBase
 	{
 	public:
-		BPCUDAUploatAgent(
+		Tex2DUploadAgent(
+			const std::string& pipeName,
 			const size_t numDetsU,
 			const size_t numDetsV
 		);
@@ -33,7 +32,7 @@ namespace JEngine
 
 		std::shared_ptr<Pipe<Tex2D<float>>> pPipeOut;
 
-
+		const std::string pipeName;
 		const size_t numDetectorsU;
 		const size_t numDetectorsV;
 

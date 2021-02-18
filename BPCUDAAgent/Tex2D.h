@@ -3,8 +3,6 @@
 
 #pragma once
 
-// The file cuda_tuntime_api.h contains a non-unicode character
-#pragma warning(disable: 4819)
 #include "cuda_runtime.h"
 
 namespace JEngine

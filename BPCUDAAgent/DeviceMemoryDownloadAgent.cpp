@@ -1,32 +1,34 @@
 // Description:
-//   BPCUDADownloadAgent downloads data from CUDA device to host memory
+//   DeviceMemoryDownloadAgent downloads data from CUDA device to host memory
 
-#include "BPCUDADownloadAgent.h"
+#include "DeviceMemoryDownloadAgent.h"
 
 namespace JEngine
 {
-	BPCUDADownloatAgent::BPCUDADownloatAgent(
+	DeviceMemoryDownloadAgent::DeviceMemoryDownloadAgent(
+		const std::string& pipeName,
 		const size_t sizeX,
 		const size_t sizeY)
 		: SequentialAgentBase("BPCUDADownloadAgent", 1)
+		, pipeName(pipeName)
 		, sizeX(sizeX)
 		, sizeY(sizeY)
 	{
 	}
 
-	void BPCUDADownloatAgent::SetPipesImpl()
+	void DeviceMemoryDownloadAgent::SetPipesImpl()
 	{
-		pPipeIn = BranchPipeFromTrunk<DeviceMemory<float>>("Slice");
+		pPipeIn = BranchPipeFromTrunk<DeviceMemory<float>>(pipeName);
 		pPipeIn->SetConsumer(GetAgentName(),
 			this->GetNumThreads(), 1, 0);
 
-		pPipeOut = CreateNewPipe<FloatVec>("Slice");
+		pPipeOut = CreateNewPipe<FloatVec>(pipeName);
 		pPipeOut->SetTemplate(FloatVec(sizeX * sizeY), { sizeX,sizeY });
 		pPipeOut->SetProducer(GetAgentName(), 1, 1);
 		MergePipeToTrunk(pPipeOut);
 	}
 
-	void BPCUDADownloatAgent::WorkFlow0()
+	void DeviceMemoryDownloadAgent::WorkFlow0()
 	{
 		cudaStream_t cudaStream;
 		cudaStreamCreate(&cudaStream);
