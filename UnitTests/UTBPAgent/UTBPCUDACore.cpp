@@ -1,11 +1,11 @@
 #include "pch.h"
-#include "..\..\Common\Timer.h"
-#include "..\..\Common\LogMgr.h"
-#include "..\..\BPCUDAAgent\BPCUDACore.h"
-#include "..\..\BPCUDAAgent\DeviceMemory.h"
-#include "..\..\BPCUDAAgent\Tex2D.h"
-#include "..\..\BPAgent\BPCore.h"
-#include "..\..\Performance\BasicMathIPP.h"
+#include "../../Common/Timer.h"
+#include "../../Common/LogMgr.h"
+#include "../../BPCUDAAgent/BPCUDACore.h"
+#include "../../CUDA/DeviceMemory.h"
+#include "../../CUDA/Tex2D.h"
+#include "../../BPAgent/BPCore.h"
+#include "../../Performance/BasicMathIPP.h"
 
 using namespace JEngine;
 using namespace std;

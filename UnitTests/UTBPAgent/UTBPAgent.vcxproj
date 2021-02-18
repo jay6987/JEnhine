@@ -51,6 +51,9 @@
     <ProjectReference Include="..\..\Common\Common.vcxproj">
       <Project>{edc87f9f-963f-40bf-97d9-45dc8c245648}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\CUDA\CUDA.vcxproj">
+      <Project>{88cdec8d-fef0-4183-a285-00115340409d}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\Performance\Performance.vcxproj">
       <Project>{d3d254be-e49a-437d-9cda-8d0d3cbe516c}</Project>
     </ProjectReference>

@@ -4,10 +4,10 @@
 #pragma once
 
 #include "cuda_runtime.h"
-#include "..\Pipeline\SequentialAgentBase.h"
-#include "..\Pipeline\Pipe.h"
-#include "..\Common\TypeDefs.h"
-#include "DeviceMemory.h"
+#include "../Pipeline/SequentialAgentBase.h"
+#include "../Pipeline/Pipe.h"
+#include "../Common/TypeDefs.h"
+#include "../CUDA/DeviceMemory.h"
 
 namespace JEngine
 {

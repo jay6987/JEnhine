@@ -6,10 +6,10 @@
 #pragma once
 
 #include "cuda_runtime.h"
-#include "..\Pipeline\SequentialAgentBase.h"
-#include "..\Pipeline\Pipe.h"
-#include "..\Common\TypeDefs.h"
-#include "Tex2D.h"
+#include "../Pipeline/SequentialAgentBase.h"
+#include "../Pipeline/Pipe.h"
+#include "../Common/TypeDefs.h"
+#include "../CUDA/Tex2D.h"
 
 namespace JEngine
 {

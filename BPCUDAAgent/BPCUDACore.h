@@ -4,10 +4,10 @@
 #pragma once
 
 #include "cuda_runtime.h"
-#include "..\Common\TypeDefs.h"
-#include "..\TransformMatrix\ProjectionMatrix.h"
-#include "DeviceMemory.h"
-#include "Tex2D.h"
+#include "../Common/TypeDefs.h"
+#include "../TransformMatrix/ProjectionMatrix.h"
+#include "../CUDA/DeviceMemory.h"
+#include "../CUDA/Tex2D.h"
 
 namespace JEngine
 {

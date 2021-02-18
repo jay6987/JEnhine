@@ -3,10 +3,10 @@
 //   pipe dump and load functions for
 //   DeviceMemory<float> and Tex2D<float>
 
-#include "..\Pipeline\Pipe.h"
-#include "..\Common\TypeDefs.h"
-#include "Tex2D.h"
-#include "DeviceMemory.h"
+#include "../Pipeline/Pipe.h"
+#include "../Common/TypeDefs.h"
+#include "../CUDA/Tex2D.h"
+#include "../CUDA/DeviceMemory.h"
 #include "cuda_runtime.h"
 
 namespace JEngine

@@ -11,19 +11,21 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BPCUDAAgent.cpp" />
-    <ClCompile Include="BPCUDACore.cpp" />
+    <ClCompile Include="DeviceMemory.cpp" />
+    <ClCompile Include="DeviceMemoryDownloadAgent.cpp" />
+    <ClCompile Include="PipeDumpLoadImplCUDA.cpp" />
+    <ClCompile Include="Tex2DFloat.cpp" />
+    <ClCompile Include="Tex2DUploadAgent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BPCUDAAgent.h" />
-    <ClInclude Include="BPCUDACore.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <CudaCompile Include="BPCUDACore.cu" />
+    <ClInclude Include="DeviceMemory.h" />
+    <ClInclude Include="DeviceMemoryDownloadAgent.h" />
+    <ClInclude Include="Tex2D.h" />
+    <ClInclude Include="Tex2DUploadAgent.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{10920EE1-5DD0-4050-94A5-CD710F60F803}</ProjectGuid>
-    <RootNamespace>BPCUDAAgent</RootNamespace>
+    <ProjectGuid>{88CDEC8D-FEF0-4183-A285-00115340409D}</ProjectGuid>
+    <RootNamespace>CUDA</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

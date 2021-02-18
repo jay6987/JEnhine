@@ -110,6 +110,9 @@
     <ProjectReference Include="..\CTNumAgent\CTNumAgent.vcxproj">
       <Project>{3eba4860-3282-49c3-b86f-f3cc77be1b2d}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\CUDA\CUDA.vcxproj">
+      <Project>{88cdec8d-fef0-4183-a285-00115340409d}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\FilterAgent\FilterAgent.vcxproj">
       <Project>{fcd854dd-ff7b-4b7c-964a-59ebd8001526}</Project>
     </ProjectReference>
