@@ -117,7 +117,7 @@ namespace JEngine
 		}
 		float progress = (float)finished / (float)total;
 		WriteProgress(progress);
-		GLog("Progress: " + std::to_string(progress));
+		//GLog("Progress: " + std::to_string(progress));
 
 		if (progress == lastProgress && progress != 1)
 		{
