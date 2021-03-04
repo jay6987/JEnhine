@@ -27,36 +27,37 @@ namespace JEngine
 		~BPCUDACore();
 
 		// Set accumulatedVol and accumulatedCnt to 0
-		void InitShot();
+		void InitShot_Synced();
 
 		// Pre-calculate:
 		//	XxPM0, YxPM1, ZxPM2,
 		//	XxPM4, YxPM5, ZxPM6,
 		//	XxPM8, YxPM9, ZxPM10,
-		void DeployPreCalculate(const size_t iPart, const size_t iFrame);
+		void PreCalculate_Synced(const size_t iPart, const size_t iFrame);
 
 		// Call kernel functions to perform back projecton
-		void DeployCallBackProj(
+		void DeployBackProj(
 			const Tex2D<float>& proj,
 			const size_t iPart,
 			const size_t iFrame
 		);
+		void SyncBackProj();
 
 		// Store precalculated accumulated weights from device memory to host memory
 		void BackupAccumulatedWeight(const size_t iPart);
 
 		// Call kernel functions to perform back projecton weight calculation
-		void DeployCallBackProjWeight(
+		void DeployBackProjWeight(
 			const size_t iPart,
 			const size_t iFrame);
+		void SyncBackProjWeight();
 
 		// Devide accumulatedVol by accumulatedCnt to update output
 		void DeployUpdateOutput(
 			DeviceMemory<float>& slice,
 			const size_t iPart,
 			size_t sliceIdxWithinPart);
-
-		void SyncCUDAStreams();
+		void SyncUpdateOutput();
 
 		std::vector<signed short>& GetPreCalculatedWeight(size_t iSlice) {
 			return precalculatedWeightOnHost[iSlice];
@@ -113,8 +114,6 @@ namespace JEngine
 
 		Tex2D<float> projectionForWeightCalulation;// all element are 1
 
-		cudaStream_t cudaStream0;
-		cudaStream_t cudaStream1;
-		cudaStream_t cudaStream2;
+		cudaStream_t cs;
 	};
 }

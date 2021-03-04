@@ -16,7 +16,8 @@ namespace JEngine
 		Tex2D(Tex2D<T>&& org) noexcept;
 		~Tex2D();
 		const cudaTextureObject_t& Get() const { return textureObject; }
-		void Set(const T* pSrc, cudaStream_t cudaStream = NULL);
+		void Set(const T* pSrc, cudaStream_t cudaStream);
+		void Set(const T* pSrc);
 	private:
 		const size_t width;
 		const size_t height;

@@ -117,21 +117,23 @@ namespace JEngine
 		ThreadOccupiedScope occupied(this);
 		for (size_t iPart = 0; iPart < numReconParts; ++iPart)
 		{
-			pBPCore->InitShot();
-			pBPCore->SyncCUDAStreams();
+			{
+				WaitAsyncScope asynced(&occupied);
+				pBPCore->InitShot_Synced();
+			}
 
 			for (size_t iView = 0; iView < projectionMatrices.size(); iView += projectionMatrices.size() / 20)
 			{
-				pBPCore->DeployPreCalculate(iPart, iView);
+
 				{
 					WaitAsyncScope asynced(&occupied);
-					pBPCore->SyncCUDAStreams();
+					pBPCore->PreCalculate_Synced(iPart, iView);
 				}
 
-				pBPCore->DeployCallBackProjWeight(0, iView);
+				pBPCore->DeployBackProjWeight(0, iView);
 				{
 					WaitAsyncScope asynced(&occupied);
-					pBPCore->SyncCUDAStreams();
+					pBPCore->SyncBackProjWeight();
 				}
 
 			}
@@ -202,22 +204,22 @@ namespace JEngine
 	void BPCUDAAgent::PreCalculateWeight(const size_t iPart)
 	{
 		ThreadOccupiedScope occupied(this);
-		pBPCore->InitShot();
-		pBPCore->SyncCUDAStreams();
+		{
+			WaitAsyncScope asynced(&occupied);
+			pBPCore->InitShot_Synced();
+		}
 
 		for (size_t iView = 0; iView < projectionMatrices.size(); ++iView)
 		{
-			pBPCore->DeployPreCalculate(iPart, iView);
-
 			{
 				WaitAsyncScope asynced(&occupied);
-				pBPCore->SyncCUDAStreams();
+				pBPCore->PreCalculate_Synced(iPart, iView);
 			}
 
-			pBPCore->DeployCallBackProjWeight(0, iView);
+			pBPCore->DeployBackProjWeight(0, iView);
 			{
 				WaitAsyncScope asynced(&occupied);
-				pBPCore->SyncCUDAStreams();
+				pBPCore->SyncBackProjWeight();
 			}
 			ReportProgress();
 		}
@@ -239,22 +241,23 @@ namespace JEngine
 
 			if (readToken.IsShotStart())
 			{
-				pBPCore->InitShot();
+				WaitAsyncScope asynced(&occupied);
+				pBPCore->InitShot_Synced();
 			}
-			pBPCore->DeployPreCalculate(iPart, viewIndex);
+
 
 			{
 				WaitAsyncScope asynced(&occupied);
-				pBPCore->SyncCUDAStreams();
+				pBPCore->PreCalculate_Synced(iPart, viewIndex);
 			}
 
-			pBPCore->DeployCallBackProj(
+			pBPCore->DeployBackProj(
 				readToken.GetBuffer(0),
 				iPart,
 				viewIndex);
 			{
 				WaitAsyncScope asynced(&occupied);
-				pBPCore->SyncCUDAStreams();
+				pBPCore->SyncBackProj();
 			}
 
 			if (readToken.IsShotEnd())
@@ -278,7 +281,7 @@ namespace JEngine
 			pBPCore->DeployUpdateOutput(writeToken.GetBuffer(0), iPart, i);
 			{
 				WaitAsyncScope asynced(&occupied);
-				pBPCore->SyncCUDAStreams();
+				pBPCore->SyncUpdateOutput();
 			}
 		}
 	}

@@ -119,14 +119,12 @@ namespace UTBPCUDACore
 			{
 				for (size_t iPart = 0; iPart < numReconParts; ++iPart)
 				{
-					bpCudaCore.InitShot();
-					bpCudaCore.SyncCUDAStreams();
+					bpCudaCore.InitShot_Synced();
 					for (size_t iView = 0; iView < projectionMatrices.size(); ++iView)
 					{
-						bpCudaCore.DeployPreCalculate(iPart, iView);
-						bpCudaCore.SyncCUDAStreams();
-						bpCudaCore.DeployCallBackProjWeight(iPart, iView);
-						bpCudaCore.SyncCUDAStreams();
+						bpCudaCore.PreCalculate_Synced(iPart, iView);
+						bpCudaCore.DeployBackProjWeight(iPart, iView);
+						bpCudaCore.SyncBackProjWeight();
 					}
 					// back up accumulagted weight
 					bpCudaCore.BackupAccumulatedWeight(iPart);
@@ -137,14 +135,12 @@ namespace UTBPCUDACore
 				{
 					const size_t startSliceIndex = iPart * numSlicesPerRecon;
 					const size_t numSlices = min(numSlicesPerRecon, sizeZ - startSliceIndex);
-					bpCudaCore.InitShot();
-					bpCudaCore.SyncCUDAStreams();
+					bpCudaCore.InitShot_Synced();
 					for (size_t iView = 0; iView < projectionMatrices.size(); ++iView)
 					{
-						bpCudaCore.DeployPreCalculate(iPart, iView);
-						bpCudaCore.SyncCUDAStreams();
-						bpCudaCore.DeployCallBackProj(projCUDA, iPart, iView);
-						bpCudaCore.SyncCUDAStreams();
+						bpCudaCore.PreCalculate_Synced(iPart, iView);
+						bpCudaCore.DeployBackProj(projCUDA, iPart, iView);
+						bpCudaCore.SyncBackProj();
 					}
 
 
@@ -152,7 +148,7 @@ namespace UTBPCUDACore
 					for (size_t iSlice = 0; iSlice < numSlices; ++iSlice)
 					{
 						bpCudaCore.DeployUpdateOutput(sliceCUDA, iPart, iSlice);
-						bpCudaCore.SyncCUDAStreams();
+						bpCudaCore.SyncUpdateOutput();
 						cudaMemcpy(
 							volCUDAHost.data() + (iPart * numSlicesPerRecon + iSlice) * sizeX * sizeY,
 							sliceCUDA.Data(),

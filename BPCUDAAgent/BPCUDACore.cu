@@ -4,6 +4,7 @@
 
 #include <algorithm>
 #include "device_launch_parameters.h"
+#include "../CUDA/ErrorChecking.h"
 #include "BPCUDACore.h"
 #include "../Common/Exception.h"
 #include "../Performance/BasicMathIPP.h"
@@ -85,7 +86,7 @@ namespace JEngine
 
 	}
 
-	void BPCUDACore::DeployCallBackProj(
+	void BPCUDACore::DeployBackProj(
 		const Tex2D<float>& proj,
 		const size_t iPart,
 		const size_t iFrame)
@@ -96,7 +97,9 @@ namespace JEngine
 		const size_t beginSliceIndex = iPart * numSlicesEachPart;
 		const size_t numSlices = std::min(numSlicesEachPart, volumeSizeZ - beginSliceIndex);
 		dim3 blockSize(16, 16/*, alwaysOne*/);
-		BackProject << <(unsigned int)numSlices, blockSize, 0, cudaStream0 >> > (
+
+		CUDA_KERNEL_LAUNCH_PREPARE();
+		BackProject << <(unsigned int)numSlices, blockSize, 0, cs >> > (
 			accumulatedVol.Data(),
 			proj.Get(),
 			uWeight[iFrame].Data(),
@@ -107,12 +110,11 @@ namespace JEngine
 			numDetectorsU, numDetectorsV,
 			volumeSizeX, volumeSizeY, numSlices
 			);
-		if (cudaPeekAtLastError() != cudaSuccess)
-			ThrowExceptionAndLog(cudaGetErrorString(cudaGetLastError()));
+		CUDA_KERNEL_LAUNCH_CHECK();
 	}
 
 
-	void BPCUDACore::DeployCallBackProjWeight(
+	void BPCUDACore::DeployBackProjWeight(
 		const size_t iPart,
 		const size_t iFrame)
 	{
@@ -121,10 +123,10 @@ namespace JEngine
 
 		const size_t beginSliceIndex = iPart * numSlicesEachPart;
 		const size_t numSlices = std::min(numSlicesEachPart, volumeSizeZ - beginSliceIndex);
-		//cudaDeviceProp p;
-		//cudaGetDeviceProperties(&p, 0);
 		dim3 blockSize(16, 16/*, alwaysOne*/);
-		BackProject << <(unsigned int)numSlices, blockSize, 0, cudaStream0 >> > (
+
+		CUDA_KERNEL_LAUNCH_PREPARE();
+		BackProject << <(unsigned int)numSlices, blockSize, 0, cs >> > (
 			accumulatedVol.Data(),
 			projectionForWeightCalulation.Get(),
 			uWeight[iFrame].Data(),
@@ -135,40 +137,41 @@ namespace JEngine
 			numDetectorsU, numDetectorsV,
 			volumeSizeX, volumeSizeY, numSlices
 			);
-		if (cudaPeekAtLastError() != cudaSuccess)
-			ThrowExceptionAndLog(cudaGetErrorString(cudaGetLastError()));
+		CUDA_KERNEL_LAUNCH_CHECK();
 	}
 
-	void BPCUDACore::DeployPreCalculate(const size_t iPart, const size_t iFrame)
+	void BPCUDACore::PreCalculate_Synced(const size_t iPart, const size_t iFrame)
 	{
 		const float* pPTM = projectionMatrices[iFrame].Data();
-		Scale << <(unsigned int)volumeSizeX, 1, 0, cudaStream1 >> > (
+
+		CUDA_KERNEL_LAUNCH_PREPARE();
+		Scale << <(unsigned int)volumeSizeX, 1, 0, cs >> > (
 			XxPM0.Data(), XxPM4.Data(), XxPM8.Data(),
 			axisX.Data(),
 			pPTM[0], pPTM[4], pPTM[8]
 			);
-		if (cudaPeekAtLastError() != cudaSuccess)
-			ThrowExceptionAndLog(cudaGetErrorString(cudaGetLastError()));
+		CUDA_KERNEL_LAUNCH_CHECK();
+		CUDA_SAFE_CALL(cudaStreamSynchronize(cs));
 
-		Scale << <(unsigned int)volumeSizeY, 1, 0, cudaStream2 >> > (
+		CUDA_KERNEL_LAUNCH_PREPARE();
+		Scale << <(unsigned int)volumeSizeY, 1, 0, cs >> > (
 			YxPM1.Data(), YxPM5.Data(), YxPM9.Data(),
 			axisY.Data(),
 			pPTM[1], pPTM[5], pPTM[9]
 			);
-		if (cudaPeekAtLastError() != cudaSuccess)
-			ThrowExceptionAndLog(cudaGetErrorString(cudaGetLastError()));
+		CUDA_KERNEL_LAUNCH_CHECK();
+		CUDA_SAFE_CALL(cudaStreamSynchronize(cs));
 
 		const size_t beginSliceIndex = iPart * numSlicesEachPart;
 		const size_t numSlices = std::min(numSlicesEachPart, volumeSizeZ - beginSliceIndex);
-
-		Scale << <(unsigned int)numSlices, 1, 0, cudaStream0 >> > (
+		CUDA_KERNEL_LAUNCH_PREPARE();
+		Scale << <(unsigned int)numSlices, 1, 0, cs >> > (
 			ZxPM2.Data(), ZxPM6.Data(), ZxPM10.Data(),
 			axisZs[iPart].Data(),
 			pPTM[2], pPTM[6], pPTM[10]
 			);
-		if (cudaPeekAtLastError() != cudaSuccess)
-			ThrowExceptionAndLog(cudaGetErrorString(cudaGetLastError()));
-
+		CUDA_KERNEL_LAUNCH_CHECK();
+		CUDA_SAFE_CALL(cudaStreamSynchronize(cs));
 	}
 
 	void BPCUDACore::DeployUpdateOutput(
@@ -188,31 +191,27 @@ namespace JEngine
 			preCalculatedWeightSliceMeans[sliceIdx],
 			volumeSizeX * volumeSizeY);
 
-		cudaMemcpyAsync(
+		CUDA_SAFE_CALL(cudaMemcpyAsync(
 			weightPerSlice.Data(),
 			preCalculatedWeightSlice.data(),
 			volumeSizeX * volumeSizeY * sizeof(float),
 			cudaMemcpyHostToDevice,
-			cudaStream0
-		);
-		if (cudaPeekAtLastError() != cudaSuccess)
-			ThrowExceptionAndLog(cudaGetErrorString(cudaGetLastError()));
-
-
+			cs
+		));
 
 		dim3 threadsPerBlock(16, 16);
 		dim3 numBlocks(
 			((unsigned int)volumeSizeX - 1) / threadsPerBlock.x + 1,
 			((unsigned int)volumeSizeY - 1) / threadsPerBlock.y + 1);
-		Div2 << <numBlocks, threadsPerBlock, 0, cudaStream0 >> > (
+		CUDA_KERNEL_LAUNCH_PREPARE();
+		Div2 << <numBlocks, threadsPerBlock, 0, cs >> > (
 			slice.Data(),
 			accumulatedVol.Data(),
 			weightPerSlice.Data(),
 			sliceIdxWithinPart,
 			volumeSizeX, volumeSizeY
 			);
-		if (cudaPeekAtLastError() != cudaSuccess)
-			ThrowExceptionAndLog(cudaGetErrorString(cudaGetLastError()));
+		CUDA_KERNEL_LAUNCH_CHECK();
 	}
 
 }

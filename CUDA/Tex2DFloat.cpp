@@ -7,7 +7,8 @@
 #include <sstream>
 
 #include "Tex2D.h"
-#include "..\Common\Exception.h"
+#include "../Common/Exception.h"
+#include "ErrorChecking.h"
 
 namespace JEngine
 {
@@ -27,11 +28,12 @@ namespace JEngine
 		Malloc();
 		CreateObject();
 
-		cudaMemcpy2DArrayToArray(
-			pArrayOnDevice, 0, 0,
-			org.pArrayOnDevice, 0, 0,
-			width * sizeof(float), height,
-			cudaMemcpyDeviceToDevice);
+		CUDA_SAFE_CALL(
+			cudaMemcpy2DArrayToArray(
+				pArrayOnDevice, 0, 0,
+				org.pArrayOnDevice, 0, 0,
+				width * sizeof(float), height,
+				cudaMemcpyDeviceToDevice));
 	}
 
 	Tex2D<float>::Tex2D(Tex2D<float>&& org) noexcept
@@ -56,26 +58,25 @@ namespace JEngine
 		cudaChannelFormatDesc m_channelDesc =
 			cudaCreateChannelDesc(32, 0, 0, 0, cudaChannelFormatKindFloat);
 
-		cudaMallocArray(
+		cudaError_t ec = cudaMallocArray(
 			&pArrayOnDevice,
 			&m_channelDesc,
 			width,
 			height
 		);
-		if (cudaPeekAtLastError() != cudaSuccess)
+
+		if (cudaErrorMemoryAllocation == ec)
 		{
-			if (cudaPeekAtLastError() == cudaErrorMemoryAllocation)
-			{
-				std::stringstream ss;
-				ss << "CUDA failed to malloc " <<
-					width * height * sizeof(float) << " bytes of array memory, cudaError = " << cudaGetLastError();
-				ThrowExceptionAndLog(ss.str());
-			}
-			else
-			{
-				ThrowExceptionAndLog(cudaGetErrorString(cudaGetLastError()));
-			}
+			std::stringstream ss;
+			ss << "CUDA failed to malloc " <<
+				width * height * sizeof(float) << " bytes of array memory, cudaError = " << cudaGetLastError();
+			ThrowExceptionAndLog(ss.str());
 		}
+		else if (cudaSuccess != ec)
+		{
+			ThrowExceptionAndLog(cudaGetErrorString(cudaGetLastError()));
+		}
+
 	}
 
 	template<>
@@ -101,24 +102,34 @@ namespace JEngine
 		texDescr.borderColor[2] = NAN;
 		texDescr.borderColor[3] = NAN;
 
-		if (cudaCreateTextureObject(&textureObject, &texRes, &texDescr, NULL))
-			ThrowExceptionAndLog(cudaGetErrorString(cudaGetLastError()));
+		CUDA_SAFE_CALL(cudaCreateTextureObject(&textureObject, &texRes, &texDescr, NULL));
 
 	}
 
 	void Tex2D<float>::Set(const float* pSrc, cudaStream_t cudaStream)
 	{
+		CUDA_SAFE_CALL(
+			cudaMemcpy2DToArrayAsync(
+				pArrayOnDevice, 0, 0,
+				pSrc,
+				width * sizeof(float),
+				width * sizeof(float),
+				height,
+				cudaMemcpyHostToDevice,
+				cudaStream
+			));
+	}
 
-		if (cudaMemcpy2DToArrayAsync(
-			pArrayOnDevice, 0, 0,
-			pSrc,
-			width * sizeof(float),
-			width * sizeof(float),
-			height,
-			cudaMemcpyHostToDevice, cudaStream
-		))
-		{
-			ThrowExceptionAndLog(cudaGetErrorString(cudaGetLastError()));
-		}
+	void Tex2D<float>::Set(const float* pSrc)
+	{
+		CUDA_SAFE_CALL(
+			cudaMemcpy2DToArray(
+				pArrayOnDevice, 0, 0,
+				pSrc,
+				width * sizeof(float),
+				width * sizeof(float),
+				height,
+				cudaMemcpyHostToDevice
+			));
 	}
 }

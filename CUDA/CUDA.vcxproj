@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="DeviceMemory.cpp" />
     <ClCompile Include="DeviceMemoryDownloadAgent.cpp" />
+    <ClCompile Include="ErrorChecking.cpp" />
     <ClCompile Include="PipeDumpLoadImplCUDA.cpp" />
     <ClCompile Include="Tex2DFloat.cpp" />
     <ClCompile Include="Tex2DUploadAgent.cpp" />
@@ -20,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="DeviceMemory.h" />
     <ClInclude Include="DeviceMemoryDownloadAgent.h" />
+    <ClInclude Include="ErrorChecking.h" />
     <ClInclude Include="Tex2D.h" />
     <ClInclude Include="Tex2DUploadAgent.h" />
   </ItemGroup>

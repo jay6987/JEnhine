@@ -1,7 +1,6 @@
 // Description:
 //   LogMgr is used to write logs into file
-//
-// Copyright (c) 2019 Fussen Technology Co., Ltd
+
 #pragma once
 
 #include <fstream>

@@ -5,10 +5,12 @@
 #include <fstream>
 #include <algorithm>
 #include "BPCUDACore.h"
+#include "../CUDA/ErrorChecking.h"
 #include "../Performance/LinearAlgebraMath.h"
 #include "../Performance/BasicMathIPP.h"
 #include "../Common/Constants.h"
 #include "../Common/Exception.h"
+#include "../Common/GLog.h"
 
 namespace JEngine
 {
@@ -38,40 +40,24 @@ namespace JEngine
 		, preCalculatedWeightSlice(volumeSizeX* volumeSizeY)
 		, preCalculatedWeightSliceMeans(volumeSizeZ)
 	{
-		cudaStreamCreate(&cudaStream0);
-		if (cudaPeekAtLastError() != cudaSuccess)
-			ThrowExceptionAndLog(cudaGetErrorString(cudaGetLastError()));
-
-		cudaStreamCreate(&cudaStream1);
-		if (cudaPeekAtLastError() != cudaSuccess)
-			ThrowExceptionAndLog(cudaGetErrorString(cudaGetLastError()));
-
-		cudaStreamCreate(&cudaStream2);
-		if (cudaPeekAtLastError() != cudaSuccess)
-			ThrowExceptionAndLog(cudaGetErrorString(cudaGetLastError()));
-
-
+		CUDA_SAFE_CALL(cudaStreamCreate(&cs));
 		{
 			FloatVec temp = Linespace(0.0f, pitchXY, volumeSizeX);
-			cudaMemcpy(
+			CUDA_SAFE_CALL(cudaMemcpy(
 				axisX.Data(),
 				temp.data(),
 				volumeSizeX * sizeof(float),
 				cudaMemcpyHostToDevice
-			);
-			if (cudaPeekAtLastError() != cudaSuccess)
-				ThrowExceptionAndLog(cudaGetErrorString(cudaGetLastError()));
+			));
 		}
 		{
 			FloatVec temp = Linespace(0.0f, pitchXY, volumeSizeY);
-			cudaMemcpy(
+			CUDA_SAFE_CALL(cudaMemcpy(
 				axisY.Data(),
 				temp.data(),
 				volumeSizeY * sizeof(float),
 				cudaMemcpyHostToDevice
-			);
-			if (cudaPeekAtLastError() != cudaSuccess)
-				ThrowExceptionAndLog(cudaGetErrorString(cudaGetLastError()));
+			));
 		}
 		{
 			FloatVec temp = Linespace(0.0f, pitchZ, volumeSizeZ);
@@ -80,14 +66,12 @@ namespace JEngine
 			{
 				size_t beginSliceIndex = iPart * numSlicesEachPart;
 				size_t numSlices = std::min(numSlicesEachPart, volumeSizeZ - beginSliceIndex);
-				cudaMemcpy(
+				CUDA_SAFE_CALL(cudaMemcpy(
 					axisZs[iPart].Data(),
 					temp.data() + beginSliceIndex,
 					numSlices * sizeof(float),
 					cudaMemcpyHostToDevice
-				);
-				if (cudaPeekAtLastError() != cudaSuccess)
-					ThrowExceptionAndLog(cudaGetErrorString(cudaGetLastError()));
+				));
 				if (beginSliceIndex + numSlices == volumeSizeZ)
 					break;
 			}
@@ -125,55 +109,45 @@ namespace JEngine
 					}
 				}
 				uWeight.push_back(DeviceMemory<float>(numDetectorsU));
-				cudaMemcpy(
+				CUDA_SAFE_CALL(cudaMemcpy(
 					uWeight.back().Data(), weight.data(),
-					numDetectorsU * sizeof(float), cudaMemcpyHostToDevice);
-				if (cudaPeekAtLastError() != cudaSuccess)
-					ThrowExceptionAndLog(cudaGetErrorString(cudaGetLastError()));
+					numDetectorsU * sizeof(float), cudaMemcpyHostToDevice));
 			}
 		}
-
-
 
 		// initialize projectionForWeightCalculation
 		{
 			std::vector<float> ones(numDetectorsU * numDetectorsV, 1.0f);
-			projectionForWeightCalulation.Set(ones.data(), cudaStream0);
+			projectionForWeightCalulation.Set(ones.data(), cs);
 		}
 
-		SyncCUDAStreams();
+		CUDA_SAFE_CALL(cudaStreamSynchronize(cs));
 
 
 	}
 
 	BPCUDACore::~BPCUDACore()
 	{
-		cudaStreamDestroy(cudaStream0);
-		cudaStreamDestroy(cudaStream1);
-		cudaStreamDestroy(cudaStream2);
+		cudaStreamDestroy(cs);
 	}
 
-	void BPCUDACore::InitShot()
+	void BPCUDACore::InitShot_Synced()
 	{
-		cudaMemsetAsync(accumulatedVol.Data(), 0,
-			volumeSizeX * volumeSizeY * numSlicesEachPart * sizeof(float), cudaStream0);
-		if (cudaPeekAtLastError() != cudaSuccess)
-			ThrowExceptionAndLog(cudaGetErrorString(cudaGetLastError()));
+		CUDA_SAFE_CALL(cudaMemset(accumulatedVol.Data(), 0,
+			volumeSizeX * volumeSizeY * numSlicesEachPart * sizeof(float)));
 	}
 
-	void BPCUDACore::SyncCUDAStreams()
+	void BPCUDACore::SyncBackProj()
 	{
-		cudaStreamSynchronize(cudaStream0);
-		if (cudaPeekAtLastError() != cudaSuccess)
-			ThrowExceptionAndLog(cudaGetErrorString(cudaGetLastError()));
-
-		cudaStreamSynchronize(cudaStream1);
-		if (cudaPeekAtLastError() != cudaSuccess)
-			ThrowExceptionAndLog(cudaGetErrorString(cudaGetLastError()));
-
-		cudaStreamSynchronize(cudaStream2);
-		if (cudaPeekAtLastError() != cudaSuccess)
-			ThrowExceptionAndLog(cudaGetErrorString(cudaGetLastError()));
+		CUDA_SAFE_CALL(cudaStreamSynchronize(cs));
+	}
+	void BPCUDACore::SyncBackProjWeight()
+	{
+		CUDA_SAFE_CALL(cudaStreamSynchronize(cs));
+	}
+	void BPCUDACore::SyncUpdateOutput()
+	{
+		CUDA_SAFE_CALL(cudaStreamSynchronize(cs));
 	}
 
 	FloatVec BPCUDACore::Linespace(const float center, const float step, const size_t size)
@@ -195,21 +169,23 @@ namespace JEngine
 
 		for (size_t iSlice = 0; iSlice < numSlices; ++iSlice)
 		{
-			cudaMemcpy(
+			CUDA_SAFE_CALL(cudaMemcpy(
 				preCalculatedWeightSlice.data(),
 				accumulatedVol.CData() + iSlice * volumeSizeX * volumeSizeY,
 				volumeSizeX * volumeSizeY * sizeof(float),
 				cudaMemcpyDeviceToHost
-			);
-			if (cudaPeekAtLastError() != cudaSuccess)
-				ThrowExceptionAndLog(cudaGetErrorString(cudaGetLastError()));
+			));
 
-			preCalculatedWeightSliceMeans[beginSliceIndex + iSlice] =
-				BasicMathIPP::Mean(preCalculatedWeightSlice.data(), volumeSizeX * volumeSizeY);
-			BasicMathIPP::Sub(
-				preCalculatedWeightSlice.data(),
-				preCalculatedWeightSliceMeans[beginSliceIndex + iSlice],
-				volumeSizeX * volumeSizeY);
+			// subtract the mean value to improve accuracy
+			{
+				preCalculatedWeightSliceMeans[beginSliceIndex + iSlice] =
+					BasicMathIPP::Mean(preCalculatedWeightSlice.data(), volumeSizeX * volumeSizeY);
+				BasicMathIPP::Sub(
+					preCalculatedWeightSlice.data(),
+					preCalculatedWeightSliceMeans[beginSliceIndex + iSlice],
+					volumeSizeX * volumeSizeY);
+			}
+
 			BasicMathIPP::Convert_32f_to_16f(
 				precalculatedWeightOnHost[(beginSliceIndex + iSlice)].data(),
 				preCalculatedWeightSlice.data(),

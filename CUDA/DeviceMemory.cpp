@@ -11,7 +11,8 @@
 #include "device_launch_parameters.h"
 
 #include "DeviceMemory.h"
-#include "..\Common\Exception.h"
+#include "../Common/Exception.h"
+#include "ErrorChecking.h"
 
 namespace JEngine
 {
@@ -27,7 +28,8 @@ namespace JEngine
 		: size(org.size)
 	{
 		Malloc();
-		cudaMemcpy(pDataOnDevice, org.pDataOnDevice, size * sizeof(float), cudaMemcpyDeviceToDevice);
+		CUDA_SAFE_CALL(cudaMemcpy(
+			pDataOnDevice, org.pDataOnDevice, size * sizeof(float), cudaMemcpyDeviceToDevice));
 	}
 
 	template<typename T>
@@ -54,16 +56,16 @@ namespace JEngine
 	template<typename T>
 	void DeviceMemory<T>::Malloc()
 	{
-		cudaMalloc(&pDataOnDevice, size * sizeof(T));
-		if (cudaPeekAtLastError() == cudaErrorMemoryAllocation)
+		cudaError_t ec = cudaMalloc(&pDataOnDevice, size * sizeof(T));
+		if (cudaErrorMemoryAllocation == ec)
 		{
 			std::stringstream ss;
 			ss << "CUDA failed to malloc " <<
-				size * sizeof(T) << " bytes of memory, cudaError = " << cudaGetLastError();
+				size * sizeof(T) << " bytes of memory, cudaError = " << ec;
 			ThrowExceptionAndLog(ss.str());
 		}
-		if (cudaPeekAtLastError() != cudaSuccess)
-			ThrowExceptionAndLog(cudaGetErrorString(cudaGetLastError()));
+		else if (cudaSuccess != ec)
+			ThrowExceptionAndLog(cudaGetErrorString(ec));
 
 	}
 
